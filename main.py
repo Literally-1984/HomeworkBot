@@ -555,8 +555,8 @@ async def emojiblocker(ctx: interactions.CommandContext):
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-@bot.event(name="on_message_create")
-async def on_message_create(message: interactions.Message):
+# @bot.event(name="on_message_create")
+# async def on_message_create(message: interactions.Message):
 
 #     if emojiblockerbool:
 
