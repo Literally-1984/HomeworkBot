@@ -71,7 +71,7 @@ def get_auctions(user: str):
 
     uuid = response.json().get("id")
 
-    auctions_url = "https://api.hypixel.net/skyblock/auction?key=" + os.environ.get("API_KEY") + &player={thing_uuid}".format(
+    auctions_url = "https://api.hypixel.net/skyblock/auction?key=" + os.environ.get("API_KEY") + "&player={thing_uuid}".format(
         thing_uuid=uuid)
 
     auctions_response = requests.get(auctions_url)
