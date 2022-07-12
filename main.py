@@ -4,6 +4,7 @@ import json
 from interactions.ext.tasks import IntervalTrigger, create_task
 from dataclasses import dataclass
 import re
+import os
 
 bot = interactions.Client(token=os.environ.get("TOKEN"),
                           intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT)
