@@ -4,7 +4,7 @@ import json
 from interactions.ext.tasks import IntervalTrigger, create_task
 from dataclasses import dataclass
 
-bot = interactions.Client(token="TOKEN",
+bot = interactions.Client(token=client.login(process.env.BOT_TOKEN),
                           intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT)
 
 emojiblockerbool = False
