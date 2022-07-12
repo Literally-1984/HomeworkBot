@@ -558,15 +558,15 @@ async def emojiblocker(ctx: interactions.CommandContext):
 @bot.event(name="on_message_create")
 async def on_message_create(message: interactions.Message):
 
-    if emojiblockerbool:
+#     if emojiblockerbool:
 
-        if blacklisted:
+#         if blacklisted:
 
-            for word in blacklisted:
+#             for word in blacklisted:
 
-                if word in message.content:
+#                 if word in message.content:
 
-                    await message.delete()
+#                     await message.delete()
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
