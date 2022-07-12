@@ -3,13 +3,16 @@ import requests
 import json
 from interactions.ext.tasks import IntervalTrigger, create_task
 from dataclasses import dataclass
+import re
 
-bot = interactions.Client(token=client.login(process.env.BOT_TOKEN),
+bot = interactions.Client(token="TOKEN",
                           intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT)
 
 emojiblockerbool = False
 
 necro_auctions_all = []
+
+blacklisted = []
 
 dealers = ["FearedIce"]
 
@@ -68,7 +71,7 @@ def get_auctions(user: str):
 
     uuid = response.json().get("id")
 
-    auctions_url = "https://api.hypixel.net/skyblock/auction?key=API_KEY&player={thing_uuid}".format(
+    auctions_url = "https://api.hypixel.net/skyblock/auction?key=" + "API_KEY" + &player={thing_uuid}".format(
         thing_uuid=uuid)
 
     auctions_response = requests.get(auctions_url)
@@ -81,12 +84,12 @@ def convert_to_dataclass(auctions):
 
     keywords = ["eaper", "ummoning", "ecromancer"]
 
-    if (auctions):
+    dealers = []
+    necroauctions = []
+    lore = []
+    price = []
 
-        dealers = []
-        necroauctions = []
-        lore = []
-        price = []
+    if (auctions):
 
         for auction in auctions:
 
@@ -124,7 +127,7 @@ def convert_to_dataclass(auctions):
 
                 for i in range(item_lore.count("hypixel")):
 
-                    souls.append(admin_name)
+                    souls.append("hypixel")
 
                     a.num_hypixel_souls += 1
 
@@ -270,7 +273,8 @@ row_hypixel_numbers = interactions.ActionRow(
 
 @bot.command(
     name="add_dealer",
-    description="add a trusted dealer to ",
+    description="add a trusted dealer to the list",
+    default_member_permissions=interactions.Permissions.ADMINISTRATOR,
     options=[
         interactions.Option(
             name="dealer",
@@ -291,65 +295,65 @@ async def add_dealer(ctx: interactions.CommandContext, dealer: str):
     await ctx.send(embeds=embed)
 
 @bot.command(
-    name="add_button",
-    description="add a ah button to find auctions",
+    name="find_auactions",
+    description="Find auctions that match specified requirements",
 )
 
 async def create_menu(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="What kind of souls do you want?")
-    await ctx.send(embeds=[embed], components=row_souls)
+    await ctx.send(embeds=[embed], components=row_souls, ephemeral=True)
 
 @bot.component("button_admin")
 async def button_response(ctx):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Admin Souls do you want?")
-    await ctx.send(embeds=[embed], components=row_admin_numbers)
+    await ctx.send(embeds=[embed], components=row_admin_numbers, ephemeral=True)
 
 @bot.component("button_hypixel")
 async def button_response(ctx):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?")
-    await ctx.send(embeds=[embed], components=row_hypixel_numbers)
+    await ctx.send(embeds=[embed], components=row_hypixel_numbers, ephemeral=True)
 
 @bot.component("button_admin_1")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 1)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_2")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 2)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_3")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 3)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_1")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 1)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_2")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 2)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_3")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 3)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed])
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -367,6 +371,7 @@ admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
 
 @bot.command(
     name="add_admin",
+    default_member_permissions=interactions.Permissions.ADMINISTRATOR,
     description="add an admin to the list",
     options = [
         interactions.Option(
@@ -381,7 +386,7 @@ async def add_admin(ctx: interactions.CommandContext, admin: str):
 
     admin_names.append(admin)
 
-    embed = interactions.Embed(title="**Admin Added!**", description="The admin {admin_name} was added to the list".format(admin_name=admin))
+    embed = interactions.Embed(title="**Admin Added!**", description="The admin {admin_name} was added to the list".format(admin_name=admin), ephemeral=True)
 
     await ctx.send(embeds=embed)
 
@@ -402,7 +407,7 @@ async def list_admins(ctx: interactions.CommandContext):
 
     embed = interactions.Embed(title="**The Admins in the list are...**", description=admin_str)
 
-    await ctx.send(embeds=embed)
+    await ctx.send(embeds=embed, ephemeral=True)
 
 @bot.command(
     name="necroauctions",
@@ -427,11 +432,11 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
         embed = interactions.Embed(title="This user currently has no necromancy-related auctions",
                                    description="Maybe try again later?", color=0x00ff00)
 
-        await ctx.send(embeds=embed)
+        await ctx.send(embeds=embed, ephemeral=True)
 
         return
 
-    await ctx.send(embeds=embed_loading)
+    await ctx.send(embeds=embed_loading, ephemeral=True)
 
     necro_auctions, final_souls_string = convert_to_dataclass(auctions)
 
@@ -440,14 +445,14 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
         final_embed = interactions.Embed(title="**Necromancy-Related Auctions of {userthingy}:**"
                                              .format(userthingy=user), description=final_souls_string)
 
-        await ctx.send(embeds=final_embed)
+        await ctx.send(embeds=final_embed, ephemeral=True)
 
     else:
 
         embed = interactions.Embed(title="This user currently has no necromancy-related auctions",
                                        description="Maybe try again later?", color=0x00ff00)
 
-        await ctx.send(embeds=embed)
+        await ctx.send(embeds=embed, ephemeral=True)
 
 # ----------------------------------------------------------------------------------------------------
 
@@ -504,8 +509,29 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp : str, damage:
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 @bot.command(
-    name="emojiblocker",
-    description="Toggles the emoji blocker",
+    name="add_blacklisted_word",
+    default_member_permissions=interactions.Permissions.ADMINISTRATOR,
+    description="Add a blacklisted word to the index",
+    options = [
+        interactions.Option(
+            name="word",
+            description="The word you want to add",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+    ],
+)
+async def add_blacklisted_word(ctx: interactions.CommandContext, word : str):
+
+    blacklisted.append(word)
+
+    embed = interactions.Embed(title="{word_thing} added to the blacklist!".format(word_thing=word), description="Toggle the blacklist by using /toggleable_blacklist")
+
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.command(
+    name="toggleable_blacklist",
+    description="Toggles the blacklist for words",
 )
 async def emojiblocker(ctx: interactions.CommandContext):
 
@@ -520,26 +546,126 @@ async def emojiblocker(ctx: interactions.CommandContext):
         emojiblockerbool = True;
 
     if emojiblockerbool:
-        embed = interactions.Embed(title="**Emoji Blocker Turned On**", description="no more cringe")
-        await ctx.send(embeds=[embed])
+        embed = interactions.Embed(title="**Blacklist Turned On**", description="no more cringe")
+        await ctx.send(embeds=[embed], ephemeral=True)
     else:
-        embed = interactions.Embed(title="**Emoji Blocker Turned Off**", description="cringe")
-        await ctx.send(embeds=[embed])
+        embed = interactions.Embed(title="**Blacklist Turned Off**", description="cringe")
+        await ctx.send(embeds=[embed], ephemeral=True)
 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 @bot.event(name="on_message_create")
 async def on_message_create(message: interactions.Message):
 
-    blacklisted = ["bob"]
-
     if emojiblockerbool:
 
-        for word in blacklisted:
+        if blacklisted:
 
-            if word in message.content:
+            for word in blacklisted:
 
-                await message.delete()
+                if word in message.content:
 
+                    await message.delete()
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+button_souls = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Souls",
+        custom_id="button_souls"
+)
+
+button_mana_cost = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Mana Cost",
+        custom_id="button_mana_cost"
+)
+
+button_slayer_guides = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Slayer Guides",
+        custom_id="button_guides"
+)
+
+button_more_soul = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="More Soul Info",
+        custom_id="button_more_soul"
+)
+
+row_faq = interactions.ActionRow(
+    components=[button_souls, button_mana_cost, button_slayer_guides, button_more_soul]
+)
+
+@bot.command(
+    name="faq",
+    description="Frequently Asked Questions",
+)
+async def faq(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="Faq", description="Please select a section to learn more about\n\nIf you still have any questions, feel free to ask them in #questions-and-advice!")
+
+    await ctx.send(embeds=[embed], components=row_faq)
+
+@bot.component("button_souls")
+async def button_response(ctx):
+
+    soul_str_1 = "**How do I know if a Soul is from Mastermode or not?**\n\n Download the #soul-checker-mod by installing forge for 1.8.9 (https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) and putting the mod into your mods folder in .minecraft.\n"
+    soul_str_2 = "If you start Minecraft, any Mastermode Souls will have a blue text saying MASTERMODE SOUL behind them. Their respective item in the auction house will also have colored background:\n"
+    soul_str_3 = "Green: The weapon has only Mastermode Souls\n"
+    soul_str_4 = "Orange: The weapon has at least one not Mastermode Soul\n\n\n"
+
+    soul_str_5 = "**How are souls obtained?**\n\n"
+    soul_str_6 = "The basic principle behind souls is that depending on the level of their respective mob, they have a chance to drop their soul if you either kill them with a necromancer weapon (Reaper Scythe/Necromancer Sword) or have a Summoning Ring in your inventory.\n"
+    soul_str_7 = "Those souls can then be picked up with the item.\n Both Admin Souls and Hypixel Soul are obtained from a rare (around 1% spawnrate) room in M1.\n Tank Zombies are always from M3."
+
+    final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
+
+    embed = interactions.Embed(title="Soul Guides", description=final_soul_faq_str)
+    await ctx.send(embeds=[embed])
+
+@bot.component("button_mana_cost")
+async def button_response(ctx):
+
+    soul_str_1 = "**How do I calculate mana cost and what does max reduction mean?**\n\n Mana cost can easily be calculated with the formula: Damage / 50 + Health / 100,000 The bot in mana-cost-check will do this for you.\n"
+    soul_str_2 = "Max reduction is achieved by having\n1. Ultimate Wise 5 on your Necromancer Weapon, which grants a 50% reduction of mana cost (This is why a Summoning Ring should not be used to summon souls as it can not be enchanted with Ultimate Wise 5)\n"
+    soul_str_3 = "2. Wise Dragon Armor's full set bonus makes all your abilities cost .67 of its original cost, so you use 33% less mana.\n"
+    soul_str_4 = "3. Lastly the Epic and Legendary Sheep pet reduces the cost of your abilities by 20% at level 100.\n"
+    soul_str_5 = "This gives a formula of mana cost x 0.5 x 0.66 x 0.8 or mana cost x 0.26.\nMAKE SURE YOU HAVE THESE THINGS OTHERWISE SPAWNING YOUR SOUL WILL BE EXPONENTIONELLY MORE EXPENSIVE\n\n\n"
+
+
+    soul_str_6 = "**How do I spawn my soul?**\n\n In the Mana and Summoning Guides category are multiple guides on general mana knowledge as well as how to summon 1.\n1 Admin soul #summoning-1-admin\n2. 2 Admin souls #summoning-2–admins \n3. Hypixel #summoning-hypixel\n4. Tank Zombies #summoning-tanks\n\n"
+    soul_str_7 = "There is usually a cheap method, which is harder to pull off and a easier, but more expensive method."
+
+    final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
+
+    embed = interactions.Embed(title="Mana Cost Guides", description=final_soul_faq_str)
+    await ctx.send(embeds=[embed])
+
+@bot.component("button_guides")
+async def button_response(ctx):
+
+    soul_str_1 = "**Which soul do I get?**\n\n 1 Admin is good enough for all Slayer Bosses besides Revenant T5 and Voidgloom T3+\n2 Admins can do all Slayer bosses besides Revenant T5 and Voidgloom T4\n1 Hypixel can do all Slayer bosses besides Voidgloom T4\n1 M6 Giant/Golem can do ALL slayer bosses. He shreds through them\nUsing souls or for Blaze Slayer T2+ is not recommended as it has max health damage which kills them fast"
+
+    soul_str_2 = "\n\n\n**How do I avoid dying to voidgloom while AFKing using Admins?**\n\nYou need:\n1. Goblin Armor\n2. Wither Cloak sword and any item with UW5 on it\n3. A god potion\nIf you get hit you loose 10% max mana with wither cloak on (20%*0.5) which is 10, as your max mana is 100. Your base mana regen is 2 and god pot adds 8. So you regen 10mana/s and loose 1 per hit. This allows you to basically never take damage, unless there is enough Nukebi Heads to deal damage to you more than once per second."
+
+
+    final_soul_faq_str = soul_str_1 + soul_str_2
+
+    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str)
+    await ctx.send(embeds=[embed])
+
+@bot.component("button_more_soul")
+async def button_response(ctx):
+
+    soul_str_1 = "**Should I use Souls in Dungeons?**\n\nNo, they die extremely fast as there is a lot of max health damage in dungeons like lava or (mini-)bosses."
+    soul_str_2 = "\n\n**What happens if my Soul dies?**\n\nIf it dies, the soul will be removed from your sword and you'll need to get a new one."
+    soul_str_3 = "\n\n**How do I regenerate my Soul?**\n\nOnly possible way is to despawning them and then resummon."
+    soul_str_4 = "\n\n**How do the Necromancer Tools work?**\n\n**If you kill a mob with a Necromancer Sword/Reaper Scythe or while having a Summoning Ring in your inventory it has a chance to drop a soul depending on its levels which can be picked up. Any soul that was stored in them can be summoned for an according mana cost. You cannot transfer souls, deleting them works by Shift + RIght Click and then clicking the soul you wish to remove."
+
+    final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4
+
+    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str)
+    await ctx.send(embeds=[embed])
 
 bot.start()
