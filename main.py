@@ -408,7 +408,7 @@ async def list_admins(ctx: interactions.CommandContext):
 
     embed = interactions.Embed(title="**The Admins in the list are...**", description=admin_str, color=0x911ef5)
 
-    await ctx.send(embeds=[embed] ephemeral=True)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.command(
     name="necroauctions",
