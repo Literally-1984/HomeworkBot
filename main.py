@@ -196,7 +196,7 @@ def get_requested_auctions(type_soul, num_souls):
 
         else:
 
-            if num_souls == auction.num_hypixel_souls_souls:
+            if num_souls == auction.num_hypixel_souls:
 
                 good_auctions.append(auction)
 
