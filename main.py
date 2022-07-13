@@ -120,7 +120,7 @@ def convert_to_dataclass(auctions):
 
         for i in range(len(necroauctions)):
 
-            a = Auction("", "", "", 0, 0, 0, 0, "")
+            a = Auction("", "", "", 0, 0, 0, "")
 
             item_name = necroauctions[i]
             item_lore = lore[i]
