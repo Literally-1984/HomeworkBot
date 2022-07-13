@@ -291,9 +291,9 @@ async def add_dealer(ctx: interactions.CommandContext, dealer: str):
 
     dealers.append(dealer)
 
-    embed = interactions.Embed(title="Dealer {dealer_name} added!".format(dealer_name=dealer), description="Their name will now show up in searches")
+    embed = interactions.Embed(title="Dealer {dealer_name} added!".format(dealer_name=dealer), description="Their name will now show up in searches", color=0x911ef5)
 
-    await ctx.send(embeds=embed, color=0x911ef5)
+    await ctx.send(embeds=embed)
 
 @bot.command(
     name="find_auactions",
@@ -301,60 +301,60 @@ async def add_dealer(ctx: interactions.CommandContext, dealer: str):
 )
 
 async def create_menu(ctx: interactions.CommandContext):
-    embed = interactions.Embed(title="Soul AH Finder", description="What kind of souls do you want?")
-    await ctx.send(embeds=[embed], components=row_souls, ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="Soul AH Finder", description="What kind of souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_souls, ephemeral=True)
 
 @bot.component("button_admin")
 async def button_response(ctx):
-    embed = interactions.Embed(title="Soul AH Finder", description="How many Admin Souls do you want?")
-    await ctx.send(embeds=[embed], components=row_admin_numbers, ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Admin Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_admin_numbers, ephemeral=True)
 
 @bot.component("button_hypixel")
 async def button_response(ctx):
-    embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?")
-    await ctx.send(embeds=[embed], components=row_hypixel_numbers, ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_hypixel_numbers, ephemeral=True)
 
 @bot.component("button_admin_1")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 1)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_2")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 2)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_3")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 3)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_1")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 1)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_2")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 2)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_3")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 3)
     requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str)
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -387,9 +387,9 @@ async def add_admin(ctx: interactions.CommandContext, admin: str):
 
     admin_names.append(admin)
 
-    embed = interactions.Embed(title="**Admin Added!**", description="The admin {admin_name} was added to the list".format(admin_name=admin), ephemeral=True)
+    embed = interactions.Embed(title="**Admin Added!**", description="The admin {admin_name} was added to the list".format(admin_name=admin), color=0x911ef5)
 
-    await ctx.send(embeds=embed, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 
 @bot.command(
@@ -406,9 +406,9 @@ async def list_admins(ctx: interactions.CommandContext):
 
     admin_str = admin_str[:-2]
 
-    embed = interactions.Embed(title="**The Admins in the list are...**", description=admin_str)
+    embed = interactions.Embed(title="**The Admins in the list are...**", description=admin_str, color=0x911ef5)
 
-    await ctx.send(embeds=embed, color=0x911ef5, ephemeral=True)
+    await ctx.send(embeds=[embed] ephemeral=True)
 
 @bot.command(
     name="necroauctions",
@@ -424,7 +424,7 @@ async def list_admins(ctx: interactions.CommandContext):
 )
 async def necroauctions(ctx: interactions.CommandContext, user: str):
 
-    embed_loading = interactions.Embed(title="Loading....", description="Please Wait")
+    embed_loading = interactions.Embed(title="Loading....", description="Please Wait", color=0x911ef5,)
 
     auctions = get_auctions(user)
 
@@ -433,27 +433,27 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
         embed = interactions.Embed(title="This user currently has no necromancy-related auctions",
                                    description="Maybe try again later?", color=0x911ef5)
 
-        await ctx.send(embeds=embed, ephemeral=True, color=0x911ef5)
+        await ctx.send(embeds=embed, ephemeral=True)
 
         return
 
-    await ctx.send(embeds=embed_loading, ephemeral=True, color=0x911ef5)
+    await ctx.send(embeds=embed_loading, ephemeral=True)
 
     necro_auctions, final_souls_string = convert_to_dataclass(auctions)
 
     if(necro_auctions):
 
         final_embed = interactions.Embed(title="**Necromancy-Related Auctions of {userthingy}:**"
-                                             .format(userthingy=user), description=final_souls_string)
+                                             .format(userthingy=user), description=final_souls_string, color=0x911ef5,)
 
-        await ctx.send(embeds=final_embed, ephemeral=True, color=0x911ef5)
+        await ctx.send(embeds=final_embed, ephemeral=True)
 
     else:
 
         embed = interactions.Embed(title="This user currently has no necromancy-related auctions",
                                        description="Maybe try again later?", color=0x911ef5)
 
-        await ctx.send(embeds=embed, ephemeral=True, color=0x911ef5)
+        await ctx.send(embeds=embed, ephemeral=True)
 
 # ----------------------------------------------------------------------------------------------------
 
@@ -499,13 +499,13 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp : str, damage:
 
     embed = interactions.Embed(title="**Mana Cost Calculation**",
                                description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
-                               .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin))
+                               .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
-    await ctx.send(embeds=[embed], color=0x911ef5)
+    await ctx.send(embeds=[embed])
 
-    common_costs_embed = interactions.Embed(title="**Common Mana Costs**", description="**Admin Soul** (15m HP 225k Damage):\n\n　**Raw Mana Cost**: 4650.0\n\n　**With Max Reduction**: 1246.2\n\n\n**Hypixel** (75m HP 750k DMG)\n\n　**Raw Mana Cost**: 15750.0\n\n　**With Max Reduction**: 4221.0")
+    common_costs_embed = interactions.Embed(title="**Common Mana Costs**", description="**Admin Soul** (15m HP 225k Damage):\n\n　**Raw Mana Cost**: 4650.0\n\n　**With Max Reduction**: 1246.2\n\n\n**Hypixel** (75m HP 750k DMG)\n\n　**Raw Mana Cost**: 15750.0\n\n　**With Max Reduction**: 4221.0", color=0x911ef5)
 
-    await ctx.send(embeds=[common_costs_embed], color=0x911ef5)
+    await ctx.send(embeds=[common_costs_embed])
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -526,9 +526,9 @@ async def add_blacklisted_word(ctx: interactions.CommandContext, word : str):
 
     blacklisted.append(word)
 
-    embed = interactions.Embed(title="{word_thing} added to the blacklist!".format(word_thing=word), description="Toggle the blacklist by using /toggleable_blacklist")
+    embed = interactions.Embed(title="{word_thing} added to the blacklist!".format(word_thing=word), description="Toggle the blacklist by using /toggleable_blacklist", color=0x911ef5)
 
-    await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.command(
     name="toggleable_blacklist",
@@ -547,11 +547,11 @@ async def emojiblocker(ctx: interactions.CommandContext):
         emojiblockerbool = True;
 
     if emojiblockerbool:
-        embed = interactions.Embed(title="**Blacklist Turned On**", description="no more cringe")
-        await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+        embed = interactions.Embed(title="**Blacklist Turned On**", description="no more cringe", color=0x911ef5)
+        await ctx.send(embeds=[embed], ephemeral=True)
     else:
-        embed = interactions.Embed(title="**Blacklist Turned Off**", description="cringe")
-        await ctx.send(embeds=[embed], ephemeral=True, color=0x911ef5)
+        embed = interactions.Embed(title="**Blacklist Turned Off**", description="cringe", color=0x911ef5)
+        await ctx.send(embeds=[embed], ephemeral=True)
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -604,7 +604,7 @@ row_faq = interactions.ActionRow(
 )
 async def faq(ctx: interactions.CommandContext):
 
-    embed = interactions.Embed(title="Faq", description="Please select a section to learn more about\n\nIf you still have any questions, feel free to ask them in #questions-and-advice!")
+    embed = interactions.Embed(title="Faq", description="Please select a section to learn more about\n\nIf you still have any questions, feel free to ask them in #questions-and-advice!", color=0x911ef5)
 
     await ctx.send(embeds=[embed], components=row_faq)
 
@@ -622,7 +622,7 @@ async def button_response(ctx):
 
     final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
 
-    embed = interactions.Embed(title="Soul Guides", description=final_soul_faq_str)
+    embed = interactions.Embed(title="Soul Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
 
 @bot.component("button_mana_cost")
@@ -640,7 +640,7 @@ async def button_response(ctx):
 
     final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
 
-    embed = interactions.Embed(title="Mana Cost Guides", description=final_soul_faq_str)
+    embed = interactions.Embed(title="Mana Cost Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
 
 @bot.component("button_guides")
@@ -653,7 +653,7 @@ async def button_response(ctx):
 
     final_soul_faq_str = soul_str_1 + soul_str_2
 
-    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str)
+    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
 
 @bot.component("button_more_soul")
@@ -666,7 +666,7 @@ async def button_response(ctx):
 
     final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4
 
-    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str)
+    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
 
 bot.start()
