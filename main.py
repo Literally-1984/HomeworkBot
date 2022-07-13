@@ -56,11 +56,15 @@ def format_number(num):
 class Auction:
     dealer: str
     item_name: str
-    price: str
+    price: int
     type: int
     num_admin_souls: int
     num_hypixel_souls: int
     string_representation: str
+      
+     def __lt__(self, other):
+        
+        return self.price < other.price
 
 trusted_dealers = ["FearedIce"]
 
@@ -116,7 +120,7 @@ def convert_to_dataclass(auctions):
 
         for i in range(len(necroauctions)):
 
-            a = Auction("", "", "", 0, 0, 0, "")
+            a = Auction("", "", "", 0, 0, 0, 0, "")
 
             item_name = necroauctions[i]
             item_lore = lore[i]
@@ -154,6 +158,7 @@ def convert_to_dataclass(auctions):
 
             if "Ultimate Wise V" in item_lore:
                 souls_string += " (With **Ultimate Wise V**)"
+               
 
             item_price_condensed = format_number(item_price)
 
