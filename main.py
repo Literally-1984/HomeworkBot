@@ -148,7 +148,7 @@ def convert_to_dataclass(auctions):
                         
                         a.num_admin_souls += 1
                         
-             if "tank" in item_lore:
+            if "tank" in item_lore:
 
                 for i in range(item_lore.count("tank")):
 
