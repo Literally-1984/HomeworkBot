@@ -128,13 +128,7 @@ def convert_to_dataclass(auctions):
 
             souls = []
 
-            if "hypixel" in item_lore:
-
-                for i in range(item_lore.count("hypixel")):
-
-                    souls.append("hypixel")
-
-                    a.num_hypixel_souls += 1
+            
 
             for admin_name in admin_names:
 
@@ -143,9 +137,19 @@ def convert_to_dataclass(auctions):
                     for i in range(item_lore.count(admin_name)):
 
                         souls.append(admin_name)
+                        
+            a.num_admin_souls = len(souls)
+            
+            if "hypixel" in item_lore:
+
+                for i in range(item_lore.count("hypixel")):
+
+                    souls.append("hypixel")
+
+                    a.num_hypixel_souls += 1
 
             a.dealer = dealers[i]
-            a.num_admin_souls = len(souls)
+            
             a.item_name = item_name
             a.price = item_price
 
