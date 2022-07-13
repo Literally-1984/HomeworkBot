@@ -186,7 +186,7 @@ def convert_to_dataclass(auctions):
     
     auctions_list.sort()
     
-    for temp_auction in auctions_list
+    for temp_auction in auctions_list:
     
         final_souls_string += temp_auction.string_representation
         final_souls_string += "\n\n"
