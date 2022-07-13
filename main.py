@@ -62,9 +62,9 @@ class Auction:
     num_hypixel_souls: int
     string_representation: str
       
-     def __lt__(self, other):
+    def __lt__(self, other):
         
-        return self.price < other.price
+      return self.price < other.price
 
 trusted_dealers = ["FearedIce"]
 
