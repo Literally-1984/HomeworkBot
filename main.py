@@ -60,11 +60,13 @@ class Auction:
     type: int
     num_admin_souls: int
     num_hypixel_souls: int
+    num_tank_souls: int
     string_representation: str
       
     def __lt__(self, other):
         
       return self.price < other.price
+ 
 
 trusted_dealers = ["FearedIce"]
 
@@ -120,7 +122,7 @@ def convert_to_dataclass(auctions):
 
         for i in range(len(necroauctions)):
 
-            a = Auction("", "", "", 0, 0, 0, "")
+            a = Auction("", "", "", 0, 0, 0, 0, "")
 
             item_name = necroauctions[i]
             item_lore = lore[i]
@@ -128,18 +130,6 @@ def convert_to_dataclass(auctions):
 
             souls = []
 
-            
-
-            for admin_name in admin_names:
-
-                if admin_name in item_lore:
-
-                    for i in range(item_lore.count(admin_name)):
-
-                        souls.append(admin_name)
-                        
-            a.num_admin_souls = len(souls)
-            
             if "hypixel" in item_lore:
 
                 for i in range(item_lore.count("hypixel")):
@@ -148,8 +138,25 @@ def convert_to_dataclass(auctions):
 
                     a.num_hypixel_souls += 1
 
+            for admin_name in admin_names:
+
+                if admin_name in item_lore:
+
+                    for i in range(item_lore.count(admin_name)):
+                      
+                        souls.append(admin_name)
+                        
+                        a.num_admin_souls += 1
+                        
+             if "tank" in item_lore:
+
+                for i in range(item_lore.count("tank")):
+
+                    souls.append("Tank Zombie")
+
+                    a.num_tank_souls += 1
+                        
             a.dealer = dealers[i]
-            
             a.item_name = item_name
             a.price = item_price
 
@@ -163,7 +170,6 @@ def convert_to_dataclass(auctions):
             if "Ultimate Wise V" in item_lore:
                 souls_string += " (With **Ultimate Wise V**)"
                
-
             item_price_condensed = format_number(item_price)
 
             souls_string += " - Price: {price}".format(price=item_price_condensed)
@@ -171,14 +177,19 @@ def convert_to_dataclass(auctions):
             souls_string += "\n"
 
             for soul in souls:
+              
                 souls_string += "\n　{soulhaha}".format(soulhaha=soul)
 
             a.string_representation = souls_string
 
-            final_souls_string += souls_string
-            final_souls_string += "\n\n"
-
             auctions_list.append(a)
+    
+    auctions_list.sort()
+    
+    for temp_auction in auctions_list
+    
+        final_souls_string += temp_auction.string_representation
+        final_souls_string += "\n\n"
 
     return auctions_list, final_souls_string
 
@@ -194,11 +205,33 @@ def get_requested_auctions(type_soul, num_souls):
 
                 good_auctions.append(auction)
 
-        else:
+        elif type_soul == 2:
 
             if num_souls == auction.num_hypixel_souls:
 
                 good_auctions.append(auction)
+        else:
+
+            if num_souls == 1:
+              
+                if 1 <= auction.num_tank_souls and auction.num_tank_souls <= 3:
+                
+                    good_auctions.append(auction)
+            
+            elif num_souls == 2:
+              
+                if 4 <= auction.num_tank_souls and auction.num_tank_souls <= 6:
+                
+                    good_auctions.append(auction)
+            
+            elif num_souls == 3:
+              
+                if 7 <= auction.num_tank_souls and auction.num_tank_souls <= 8:
+                
+                    good_auctions.append(auction)
+            
+    
+    good_auctions.sort()
 
     return good_auctions
 
@@ -232,6 +265,12 @@ button_hypixel = interactions.Button(
         style=interactions.ButtonStyle.PRIMARY,
         label="Hypixel Souls",
         custom_id="button_hypixel"
+)
+
+button_tank = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Tank Souls",
+        custom_id="button_tank"
 )
 
 button_admin_1 = interactions.Button(
@@ -270,8 +309,26 @@ button_hypixel_3 = interactions.Button(
         custom_id="button_hypixel_3"
 )
 
+button_tank_1 = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="1-3",
+        custom_id="button_tank_1"
+)
+
+button_tank_2 = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="4-6",
+        custom_id="button_tank_2"
+)
+
+button_tank_3 = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="6-8",
+        custom_id="button_tank_3"
+)
+
 row_souls = interactions.ActionRow(
-    components=[button_admin, button_hypixel]
+    components=[button_admin, button_hypixel, button_tank]
 )
 
 row_admin_numbers = interactions.ActionRow(
@@ -279,6 +336,9 @@ row_admin_numbers = interactions.ActionRow(
 )
 row_hypixel_numbers = interactions.ActionRow(
     components=[button_hypixel_1, button_hypixel_2, button_hypixel_3]
+)
+row_tank_numbers = interactions.ActionRow(
+    components=[button_tank_1, button_tank_2, button_tank_3]
 )
 
 @bot.command(
@@ -323,6 +383,11 @@ async def button_response(ctx):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_hypixel_numbers, ephemeral=True)
 
+@bot.component("button_tank")
+async def button_response(ctx):
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Tank Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_tank_numbers, ephemeral=True)
+
 @bot.component("button_admin_1")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(1, 1)
@@ -361,6 +426,27 @@ async def button_response(ctx):
 @bot.component("button_hypixel_3")
 async def button_response(ctx):
     requested_auctions = get_requested_auctions(2, 3)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_1")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions(3, 1)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_2")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions(3, 2)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_3")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions(3, 3)
     requested_str = join_auction_list(requested_auctions)
     embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
