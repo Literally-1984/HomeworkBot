@@ -455,6 +455,280 @@ async def button_response(ctx):
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
+sell_offers = []
+buy_offers = []
+
+button_admin_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Admin Souls",
+        custom_id="button_admin_w"
+)
+
+button_hypixel_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Hypixel Souls",
+        custom_id="button_hypixel_w"
+)
+
+button_tank_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="Tank Souls",
+        custom_id="button_tank_w"
+)
+
+button_admin_1_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="1",
+        custom_id="button_admin_1_w"
+)
+
+button_admin_2_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="2",
+        custom_id="button_admin_2_w"
+)
+
+button_admin_3_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="3",
+        custom_id="button_admin_3_w"
+)
+
+button_hypixel_1_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="1",
+        custom_id="button_hypixel_1_w"
+)
+
+button_hypixel_2_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="2",
+        custom_id="button_hypixel_2_w"
+)
+
+button_hypixel_3_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="3",
+        custom_id="button_hypixel_3_w"
+)
+
+button_tank_1_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="1-3",
+        custom_id="button_tank_1_w"
+)
+
+button_tank_2_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="4-6",
+        custom_id="button_tank_2_w"
+)
+
+button_tank_3_w = interactions.Button(
+        style=interactions.ButtonStyle.PRIMARY,
+        label="6-8",
+        custom_id="button_tank_3_w"
+)
+
+row_souls_w = interactions.ActionRow(
+    components=[button_admin_w, button_hypixel_w, button_tank_w]
+)
+
+row_admin_numbers_w = interactions.ActionRow(
+    components=[button_admin_1_w, button_admin_2_w, button_admin_3_w]
+)
+row_hypixel_numbers_w = interactions.ActionRow(
+    components=[button_hypixel_1_w, button_hypixel_2_w, button_hypixel_3_w]
+)
+row_tank_numbers_w = interactions.ActionRow(
+    components=[button_tank_1_w, button_tank_2_w, button_tank_3_w]
+)
+
+
+def get_requested_auctions_w(type_soul, num_souls):
+
+    good_auctions = []
+
+    for auction in sell_offers:
+
+        if type_soul == 1:
+
+            if num_souls == auction.num_admin_souls:
+
+                good_auctions.append(auction)
+
+        elif type_soul == 2:
+
+            if num_souls == auction.num_hypixel_souls:
+
+                good_auctions.append(auction)
+        else:
+
+            if num_souls == 1:
+              
+                if 1 <= auction.num_tank_souls and auction.num_tank_souls <= 3:
+                
+                    good_auctions.append(auction)
+            
+            elif num_souls == 2:
+              
+                if 4 <= auction.num_tank_souls and auction.num_tank_souls <= 6:
+                
+                    good_auctions.append(auction)
+            
+            elif num_souls == 3:
+              
+                if 7 <= auction.num_tank_souls and auction.num_tank_souls <= 8:
+                
+                    good_auctions.append(auction)
+            
+    
+    good_auctions.sort()
+
+    return good_auctions
+
+@bot.command(
+    name="wts",
+    description="Create a sell offer",
+    options = [
+        interactions.Option(
+            name="name",
+            description="The name of your weapon - include stars and IMPORTANT ENCHANTMENTS",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+        interactions.Option(
+            name="price",
+            description="The price of your weapon",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+        interactions.Option(
+            name="num_admin_souls",
+            description="The amount of admin souls your weapon has",
+            type=interactions.OptionType.INT,
+            required=True,
+        ),
+        interactions.Option(
+            name="num_hypixel_souls",
+            description="The amount of hypixel souls your weapon has",
+            type=interactions.OptionType.INT,
+            required=True,
+        ),
+        interactions.Option(
+            name="num_tank_souls",
+            description="The amount of tank souls your weapon has",
+            type=interactions.OptionType.INT,
+            required=True,
+        ),
+    ],
+)
+async def wts(ctx: interactions.CommandContext, name : str, price : str, num_admin_souls : int, num_hypixel_souls : int, num_tank_souls : int):
+  
+    if(price.endswith('m')):
+
+        price = int(price[:-1]) * 1000000
+
+    elif (price.endswith('k')):
+
+        price = int(price[:-1]) * 1000
+    
+    str_souls = "**{item_name}**: Price - {item_price},\nadmin_souls={admin_souls},\nhypixel_souls={hypixel_souls},\ntank_souls={tank_souls},\n".format(item_name=name, item_price=price, admin_souls=num_admin_souls, hypixel_souls=num_hypixel_souls,tank_souls=num_tank_souls)
+    
+    a = Auction(ctx.message.author.username, name, price, num_admin_souls, num_hypixel_souls, num_tank_souls, str_souls)
+    
+    sell_offers.append(a)
+    
+    embed = interactions.Embed(title="Your Sell Offer was created!", description="People can use /find_sell_offers to find it!")
+    
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.command(
+    name="wtb",
+    description="Create a buy offer",
+)
+async def wtb(ctx: interactions.CommandContext, num_admin_souls : int, num_hypixel_souls : int, num_tank_souls : int):
+    embed = interactions.Embed(title="Soul Sell Offer Finder", description="What kind of souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_souls_w, ephemeral=True)
+
+@bot.component("button_admin_w")
+async def button_response(ctx):
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Admin Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_admin_numbers_w, ephemeral=True)
+
+@bot.component("button_hypixel_w")
+async def button_response(ctx):
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_hypixel_numbers_w, ephemeral=True)
+
+@bot.component("button_tank_w")
+async def button_response(ctx):
+    embed = interactions.Embed(title="Soul AH Finder", description="How many Tank Souls do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_tank_numbers_w, ephemeral=True)
+
+@bot.component("button_admin_1_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(1, 1)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_admin_2_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(1, 2)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_admin_3_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(1, 3)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_hypixel_1_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(2, 1)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_hypixel_2_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(2, 2)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_hypixel_3_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(2, 3)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_1_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(3, 1)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_2_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(3, 2)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_tank_3_w")
+async def button_response(ctx):
+    requested_auctions = get_requested_auctions_w(3, 3)
+    requested_str = join_auction_list(requested_auctions)
+    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
 admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
                                "Hcherndon", "DevSlashNull", "codename_B", "aPunch", "DeprecatedNether", "Jayavarmen",
                                "ZeroErrors", "Zumulus", "Nitroholic", "OrangeMarshall", "ConnorLinfoot",
@@ -748,19 +1022,6 @@ async def button_response(ctx):
 
 
     final_soul_faq_str = soul_str_1 + soul_str_2
-
-    embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
-    await ctx.send(embeds=[embed])
-
-@bot.component("button_more_soul")
-async def button_response(ctx):
-
-    soul_str_1 = "**Should I use Souls in Dungeons?**\n\nNo, they die extremely fast as there is a lot of max health damage in dungeons like lava or (mini-)bosses."
-    soul_str_2 = "\n\n**What happens if my Soul dies?**\n\nIf it dies, the soul will be removed from your sword and you'll need to get a new one."
-    soul_str_3 = "\n\n**How do I regenerate my Soul?**\n\nOnly possible way is to despawning them and then resummon."
-    soul_str_4 = "\n\n**How do the Necromancer Tools work?**\n\n**If you kill a mob with a Necromancer Sword/Reaper Scythe or while having a Summoning Ring in your inventory it has a chance to drop a soul depending on its levels which can be picked up. Any soul that was stored in them can be summoned for an according mana cost. You cannot transfer souls, deleting them works by Shift + RIght Click and then clicking the soul you wish to remove."
-
-    final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4
 
     embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
