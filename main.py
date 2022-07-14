@@ -639,7 +639,7 @@ async def wts(ctx: interactions.CommandContext, name : str, price : str, num_adm
     
     sell_offers.append(a)
     
-    embed = interactions.Embed(title="Your Sell Offer was created!", description="People can use /find_sell_offers to find it!")
+    embed = interactions.Embed(title="Your Sell Offer was created!", description="People can use /wtb to find it!")
     
     await ctx.send(embeds=[embed], ephemeral=True)
 
