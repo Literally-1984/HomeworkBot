@@ -606,19 +606,19 @@ def get_requested_auctions_w(type_soul, num_souls):
         interactions.Option(
             name="num_admin_souls",
             description="The amount of admin souls your weapon has",
-            type=interactions.OptionType.INT,
+            type=interactions.OptionType.INTEGER,
             required=True,
         ),
         interactions.Option(
             name="num_hypixel_souls",
             description="The amount of hypixel souls your weapon has",
-            type=interactions.OptionType.INT,
+            type=interactions.OptionType.INTEGER,
             required=True,
         ),
         interactions.Option(
             name="num_tank_souls",
             description="The amount of tank souls your weapon has",
-            type=interactions.OptionType.INT,
+            type=interactions.OptionType.INTEGER,
             required=True,
         ),
     ],
