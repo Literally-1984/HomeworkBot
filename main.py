@@ -117,7 +117,7 @@ def convert_to_dataclass(auctions):
 
     if necroauctions:
 
-        for i in range(len(dealers)):
+        for i in range(len(necroauctions)):
 
             a = Auction("", "", "", 0, 0, 0, 0, "")
 
@@ -154,6 +154,7 @@ def convert_to_dataclass(auctions):
                     a.num_tank_souls += 1
                         
             a.dealer = dealers[i]
+            print(str(len(dealers)) + " " + str(i) + "\n")
             a.item_name = item_name
             a.price = item_price
 
