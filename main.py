@@ -15,7 +15,7 @@ necro_auctions_all = []
 
 blacklisted = []
 
-dealers = ["FearedIce"]
+trusted_dealers = ["FearedIce"]
 
 @create_task(IntervalTrigger(30))
 
@@ -66,9 +66,6 @@ class Auction:
     def __lt__(self, other):
         
       return self.price < other.price
- 
-
-trusted_dealers = ["FearedIce"]
 
 def get_auctions(user: str):
 
@@ -120,7 +117,7 @@ def convert_to_dataclass(auctions):
 
     if necroauctions:
 
-        for i in range(len(necroauctions)):
+        for i in range(len(dealers)):
 
             a = Auction("", "", "", 0, 0, 0, 0, "")
 
@@ -356,9 +353,9 @@ row_tank_numbers = interactions.ActionRow(
 )
 async def add_dealer(ctx: interactions.CommandContext, dealer: str):
 
-    global dealers
+    global trusted_dealers
 
-    dealers.append(dealer)
+    trusted_dealers.append(dealer)
 
     embed = interactions.Embed(title="Dealer {dealer_name} added!".format(dealer_name=dealer), description="Their name will now show up in searches", color=0x911ef5)
 
