@@ -455,9 +455,6 @@ async def button_response(ctx):
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-sell_offers = []
-buy_offers = []
-
 button_admin_w = interactions.Button(
         style=interactions.ButtonStyle.PRIMARY,
         label="Admin Souls",
@@ -544,104 +541,72 @@ row_tank_numbers_w = interactions.ActionRow(
     components=[button_tank_1_w, button_tank_2_w, button_tank_3_w]
 )
 
+@dataclass
+class sell_offer:
+    content: str
+    author: str
+    price: int
+      
+    def __lt__(self, other):
+        
+        return self.price < other.price
 
-def get_requested_auctions_w(type_soul, num_souls):
+def get_requested_auctions(ctx: interactions.CommandContext, type_soul, num_souls):
 
-    good_auctions = []
+    messages = await ctx.channel.get_history(limit=100)
+    
+    wanted_string = ""
+    
+    if type_soul == '1':
+      
+        wanted_string += "Admin souls: "
+        
+    elif type_soul == '2':
+      
+        wanted_string += "Hypixel Souls: "
+        
+    else:
+      
+        wanted_string += "Tank Souls: "
+    
+    wanted_string += str(num_souls)
+    
+    sell_offers = []
+    
+    for message in messages:
+      
+      if wanted_string in message:
+        
+          sell_offer_temp = sell_offer(message.content, message.author)
+          
+          index = sell_offer_temp.content.find("Price: ")
+          index += 7
 
-    for auction in sell_offers:
-
-        if type_soul == 1:
-
-            if num_souls == auction.num_admin_souls:
-
-                good_auctions.append(auction)
-
-        elif type_soul == 2:
-
-            if num_souls == auction.num_hypixel_souls:
-
-                good_auctions.append(auction)
-        else:
-
-            if num_souls == 1:
-              
-                if 1 <= auction.num_tank_souls and auction.num_tank_souls <= 3:
-                
-                    good_auctions.append(auction)
+          stuff = sell_offer[index:]
+          
+          if stuff[-1] == 'm':
             
-            elif num_souls == 2:
-              
-                if 4 <= auction.num_tank_souls and auction.num_tank_souls <= 6:
-                
-                    good_auctions.append(auction)
+              sell_offer_temp.price = int(stuff[:-1]) * 1000000
+          
+          if stuff[-1] == 'k':
             
-            elif num_souls == 3:
-              
-                if 7 <= auction.num_tank_souls and auction.num_tank_souls <= 8:
-                
-                    good_auctions.append(auction)
-            
-    
-    good_auctions.sort()
+              sell_offer_temp.price = int(stuff[:-1]) * 1000
+          
+          else:
+             
+              sell_offer_temp.price = int(stuff)
 
-    return good_auctions
-
-@bot.command(
-    name="wts",
-    description="Create a sell offer",
-    options = [
-        interactions.Option(
-            name="name",
-            description="The name of your weapon - include stars and IMPORTANT ENCHANTMENTS",
-            type=interactions.OptionType.STRING,
-            required=True,
-        ),
-        interactions.Option(
-            name="price",
-            description="The price of your weapon",
-            type=interactions.OptionType.STRING,
-            required=True,
-        ),
-        interactions.Option(
-            name="num_admin_souls",
-            description="The amount of admin souls your weapon has",
-            type=interactions.OptionType.INTEGER,
-            required=True,
-        ),
-        interactions.Option(
-            name="num_hypixel_souls",
-            description="The amount of hypixel souls your weapon has",
-            type=interactions.OptionType.INTEGER,
-            required=True,
-        ),
-        interactions.Option(
-            name="num_tank_souls",
-            description="The amount of tank souls your weapon has",
-            type=interactions.OptionType.INTEGER,
-            required=True,
-        ),
-    ],
-)
-async def wts(ctx: interactions.CommandContext, name : str, price : str, num_admin_souls : int, num_hypixel_souls : int, num_tank_souls : int):
-  
-    if(price.endswith('m')):
-
-        price = int(price[:-1]) * 1000000
-
-    elif (price.endswith('k')):
-
-        price = int(price[:-1]) * 1000
     
-    str_souls = "**{item_name}**: Price - {item_price},\nadmin_souls={admin_souls},\nhypixel_souls={hypixel_souls},\ntank_souls={tank_souls},\n".format(item_name=name, item_price=price, admin_souls=num_admin_souls, hypixel_souls=num_hypixel_souls,tank_souls=num_tank_souls)
+    final_string = ""
     
-    a = Auction(ctx.author.user.username, name, price, 1, num_admin_souls, num_hypixel_souls, num_tank_souls, str_souls)
+    sell_offers.sort()
     
-    sell_offers.append(a)
+    for offer in sell_offers:
+      
+        final_string += "**{author}**: {content}\n\n".format(author=offer.author, content=offer.content)
+        
     
-    embed = interactions.Embed(title="Your Sell Offer was created!", description="People can use /wtb to find it!")
-    
-    await ctx.send(embeds=[embed], ephemeral=True)
+    return final_string
 
 @bot.command(
     name="wtb",
@@ -652,81 +617,72 @@ async def wtb(ctx: interactions.CommandContext):
     await ctx.send(embeds=[embed], components=row_souls_w, ephemeral=True)
 
 @bot.component("button_admin_w")
-async def button_response(ctx):
+async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Admin Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_admin_numbers_w, ephemeral=True)
 
 @bot.component("button_hypixel_w")
-async def button_response(ctx):
+async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Hypixel Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_hypixel_numbers_w, ephemeral=True)
 
 @bot.component("button_tank_w")
-async def button_response(ctx):
+async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Tank Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_tank_numbers_w, ephemeral=True)
 
 @bot.component("button_admin_1_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(1, 1)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+  
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_2_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(1, 2)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_3_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(1, 3)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_1_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(2, 1)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_2_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(2, 2)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_3_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(2, 3)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_1_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(3, 1)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_2_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(3, 2)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_3_w")
-async def button_response(ctx):
-    requested_auctions = get_requested_auctions_w(3, 3)
-    requested_str = join_auction_list(requested_auctions)
-    embed = interactions.Embed(title="**Matching Auctions**", description=requested_str, color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):
+
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
