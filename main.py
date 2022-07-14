@@ -152,9 +152,12 @@ def convert_to_dataclass(auctions):
                     souls.append("Tank Zombie")
 
                     a.num_tank_souls += 1
+                    
+            print("dealers: " + str(len(dealers)) + " " + str(i) + "\n")
+            print("necroauctions: " + str(len(necroauctions)) + " " + str(i) + "\n")
                         
             a.dealer = dealers[i]
-            print(str(len(dealers)) + " " + str(i) + "\n")
+            
             a.item_name = item_name
             a.price = item_price
 
