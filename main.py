@@ -635,7 +635,7 @@ async def wts(ctx: interactions.CommandContext, name : str, price : str, num_adm
     
     str_souls = "**{item_name}**: Price - {item_price},\nadmin_souls={admin_souls},\nhypixel_souls={hypixel_souls},\ntank_souls={tank_souls},\n".format(item_name=name, item_price=price, admin_souls=num_admin_souls, hypixel_souls=num_hypixel_souls,tank_souls=num_tank_souls)
     
-    a = Auction(ctx.author.user.username, name, price, num_admin_souls, num_hypixel_souls, num_tank_souls, str_souls)
+    a = Auction(ctx.author.user.username, name, price, 1, num_admin_souls, num_hypixel_souls, num_tank_souls, str_souls)
     
     sell_offers.append(a)
     
