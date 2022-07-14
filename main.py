@@ -129,7 +129,7 @@ def convert_to_dataclass(auctions):
 
             if "hypixel" in item_lore:
 
-                for i in range(item_lore.count("hypixel")):
+                for j in range(item_lore.count("hypixel")):
 
                     souls.append("hypixel")
 
@@ -139,7 +139,7 @@ def convert_to_dataclass(auctions):
 
                 if admin_name in item_lore:
 
-                    for i in range(item_lore.count(admin_name)):
+                    for j in range(item_lore.count(admin_name)):
                       
                         souls.append(admin_name)
                         
@@ -147,14 +147,14 @@ def convert_to_dataclass(auctions):
                         
             if "Tank" in item_lore:
 
-                for i in range(item_lore.count("Tank")):
+                for j in range(item_lore.count("Tank")):
 
                     souls.append("Tank Zombie")
 
                     a.num_tank_souls += 1
                     
-            print("dealers: " + str(len(dealers)) + " " + str(i) + "\n")
-            print("necroauctions: " + str(len(necroauctions)) + " " + str(i) + "\n")
+#             print("dealers: " + str(len(dealers)) + " " + str(i) + "\n")
+#             print("necroauctions: " + str(len(necroauctions)) + " " + str(i) + "\n")
                         
             a.dealer = dealers[i]
             
