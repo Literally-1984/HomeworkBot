@@ -551,9 +551,7 @@ class sell_offer:
         
         return self.price < other.price
 
-def get_requested_auctions(ctx: interactions.CommandContext, type_soul, num_souls):
-
-    messages = await ctx.channel.get_history(limit=100)
+def get_requested_auctions(messages, type_soul, num_souls):
     
     wanted_string = ""
     
@@ -633,56 +631,56 @@ async def button_response(ctx: interactions.CommandContext):
 
 @bot.component("button_admin_1_w")
 async def button_response(ctx: interactions.CommandContext):
-  
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 1), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 1, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_2_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 2), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 1, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_admin_3_w")
-async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 1, 3), color=0x911ef5)
+async def button_response(ctx: interactions.CommandContext):  
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 1, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_1_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 1), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 2, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_2_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 2), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 2, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_hypixel_3_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 2, 3), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 2, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_1_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 1), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 3, 1), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_2_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 2), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 3, 2), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 @bot.component("button_tank_3_w")
 async def button_response(ctx: interactions.CommandContext):
-
-    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(ctx, 3, 3), color=0x911ef5)
+    messages = await ctx.channel.get_history(limit=100)
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 3, 3), color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
 admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
