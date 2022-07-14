@@ -647,7 +647,7 @@ async def wts(ctx: interactions.CommandContext, name : str, price : str, num_adm
     name="wtb",
     description="Create a buy offer",
 )
-async def wtb(ctx: interactions.CommandContext, num_admin_souls : int, num_hypixel_souls : int, num_tank_souls : int):
+async def wtb(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul Sell Offer Finder", description="What kind of souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_souls_w, ephemeral=True)
 
