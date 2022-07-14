@@ -150,7 +150,7 @@ def convert_to_dataclass(auctions):
                         
             if "Tank" in item_lore:
 
-                for i in range(item_lore.count("tank")):
+                for i in range(item_lore.count("Tank")):
 
                     souls.append("Tank Zombie")
 
