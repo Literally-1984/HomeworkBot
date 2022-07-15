@@ -551,7 +551,7 @@ class sell_offer:
         
         return self.price < other.price
 
-def get_requested_auctions(messages, type_soul, num_souls):
+def get_requested_auctions_w(messages, type_soul, num_souls):
     
     wanted_string = ""
     
