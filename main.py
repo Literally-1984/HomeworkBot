@@ -15,7 +15,7 @@ necro_auctions_all = []
 
 blacklisted = []
 
-trusted_dealers = ["FearedIce"]
+trusted_dealers = ["FearedIce", "let_game", "Chrisero", "PlaneDylan", "06PlaysMC", "evocative", "HDisawesome", "25ty"]
 
 @create_task(IntervalTrigger(30))
 
@@ -692,7 +692,11 @@ admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
                                "Fr0z3n",
                                "Luckykessie", "RobityBobity", "mooTV", "Otium", "NoxyD", "BingMo", "Propzie", "Roddan",
                                "Winghide",
-                               "BuddhaCat", "Sylent", "LadyBleu", "Cecer", "Bloozing", "Ob111", "Likaos", "skyerzz", "Revengee", "onah"]
+                               "BuddhaCat", "Sylent", "LadyBleu", "Cecer", "Bloozing", "Ob111", "Likaos", "skyerzz", "Revengee",
+			                         "onah", "inventivetalent", "xHascox", "sfarnham", "Bembo", "_PolynaLove_", "Pensul", "TorWolf", 
+                               "Taytale", "Nausicaah", "flameboy101", "Teddy", "Judg3", "Citria", "Magicboys", "RapidTheNerd", "Cham", 
+                               "vinny8ball", "Cheesey", "Dueces", "_fudgiethewhale", "DEADORKAI", "BlocksKey", "Plummel", "DistrictGecko", 
+                               "AdamWho", "carstairs95", "MistressEldrid"]
 
 @bot.command(
     name="add_admin",
