@@ -579,7 +579,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
         if wanted_string in message.content:
 
-            sell_offer_temp = sell_offer(message.content, message.author)
+            sell_offer_temp = sell_offer(message.content, message.author, 0)
 
             index = sell_offer_temp.content.find("Price: ")
             index += 7
