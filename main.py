@@ -595,7 +595,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
             else:
 
-                sell_offer_temp.price = int(stuff)
+                sell_offer_temp.price = int(stuff[:-1])
 
     final_string = ""
 
