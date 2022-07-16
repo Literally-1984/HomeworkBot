@@ -616,7 +616,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
         
         if num_souls == 2:
             
-            wanted_string += "Sniper"
+            wanted_string += "Tribe"
         
         if num_souls == 3:
             
@@ -692,7 +692,7 @@ async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Tank Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_tank_numbers_w, ephemeral=True)
 
-@bot.component("button_tank_w")
+@bot.component("button_other")
 async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="What kind of Soul do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_other_numbers, ephemeral=True)
