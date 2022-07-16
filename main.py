@@ -614,8 +614,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 async def wtb(ctx: interactions.CommandContext):
 
     global messages
-    messages = await ctx.get_channel()
-    messages = messages.get_history(limit=100)
+    messages = await ctx.get_channel().get__history(limit=100)
 
     await ctx.send(type(messages))
 
