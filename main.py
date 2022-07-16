@@ -634,6 +634,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
             index += 7
 
             stuff = sell_offer_temp.content[index:]
+            
+            stuff = stuff[:-1]
 
             if stuff[-1] == 'm':
                 sell_offer_temp.price = int(stuff[:-1]) * 1000000
