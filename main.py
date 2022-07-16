@@ -906,7 +906,7 @@ async def emojiblocker(ctx: interactions.CommandContext):
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 @bot.event(name="on_message_create")
-async def on_message_create(ctx: interactions.CommandContext, message: interactions.Message):
+async def on_message_create(message: interactions.Message, ctx: interactions.CommandContext):
 
     if message.channel_id == "900346857375531108":
 
