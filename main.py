@@ -1019,12 +1019,12 @@ async def button_response(ctx):
 async def wtb(ctx: interactions.CommandContext):
   
     help_str = "/necroauctions {user}: Returns necromancy-related auctions of a user, including souls\n\n/find_auactions: Finds matching auctions of trusted dealers from a set of user-provided requirements by usage of an interactive menu (yes I spelled auctions wrong, I’ll change it later but I assume all of you use autocomplete)\n\n"
-    help_str_2 = "/mana_cost {hp} {dmg}: Returns the mana cost of a soul with specified HP and DMG, along with common mana costs in order to conserve time\n\n/faq: Uses yet another set of interactive menus to display commonly asked questions\n\n"
+    help_str_2 = "/manacostcalculator {hp} {dmg}: Returns the mana cost of a soul with specified HP and DMG, along with common mana costs in order to conserve time\n\n/faq: Uses yet another set of interactive menus to display commonly asked questions\n\n"
     help_str_3 = "/wtb: Returns all sell offers with specified requirements\n\n\n\nPlease DM Literally 1984#1984 if there are any bugs!"
 
     embed = interactions.Embed(title="List of Commands", description=help_str+help_str_2+help_str_3,
                                color=0x911ef5)
-    await ctx.send(embeds=[embed], components=row_souls_w, ephemeral=True)
+    await ctx.send(embeds=[embed], ephemeral=True)
 
 
 bot.start()
