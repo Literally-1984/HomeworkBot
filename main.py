@@ -916,7 +916,7 @@ async def on_message_create(ctx: interactions.CommandContext, message: interacti
 
         await ctx.send(embeds=[common_costs_embed])
     
-    else if message.channel_id == "951415724310691860" and message.content[-1] != ']':
+    elif message.channel_id == "951415724310691860" and message.content[-1] != ']':
       
         trading_souls_string == "In order for your sell offer to show up in /wtb commands, you have to have the following syntax at the end of your message:\n\n**[{type: Admin, Tank, Hypixel} Souls: {number}, Price: {Price}]**\n\nExample: **[Admin Souls: 2, Price: 10m]**"
 
