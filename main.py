@@ -692,6 +692,11 @@ async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="Soul AH Finder", description="How many Tank Souls do you want?", color=0x911ef5)
     await ctx.send(embeds=[embed], components=row_tank_numbers_w, ephemeral=True)
 
+@bot.component("button_tank_w")
+async def button_response(ctx: interactions.CommandContext):
+    embed = interactions.Embed(title="Soul AH Finder", description="What kind of Soul do you want?", color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_other_numbers, ephemeral=True)
+
 
 @bot.component("button_admin_1_w")
 async def button_response(ctx: interactions.CommandContext):
