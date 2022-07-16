@@ -559,11 +559,11 @@ class sell_offer:
 def get_requested_auctions_w(messages, type_soul, num_souls):
     wanted_string = ""
 
-    if type_soul == '1':
+    if type_soul == 1:
 
         wanted_string += "Admin souls: "
 
-    elif type_soul == '2':
+    elif type_soul == 2:
 
         wanted_string += "Hypixel Souls: "
 
