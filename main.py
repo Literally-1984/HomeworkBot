@@ -567,13 +567,15 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
         wanted_string += "Hypixel Souls: "
 
-    else:
+    elif type_soul == 3:
 
         wanted_string += "Tank Souls: "
 
     wanted_string += str(num_souls)
 
     sell_offers = []
+    
+    print(wanted_string)
 
     for message in messages:
 
