@@ -573,7 +573,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
     wanted_string += str(num_souls)
     
-    await ctx.send(wanted_string)
+    print(wanted_string)
 
     sell_offers = []
 
@@ -587,6 +587,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
             index += 7
 
             stuff = sell_offer_temp.content[index:]
+            
+            print(stuff)
 
             if stuff[-1] == 'm':
                 sell_offer_temp.price = int(stuff[:-1]) * 1000000
@@ -598,6 +600,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
             else:
 
                 sell_offer_temp.price = int(stuff[:-1])
+            
+            sell_offers.append(sell_offer_temp)
 
     final_string = ""
 
