@@ -324,24 +324,6 @@ button_tank_3 = interactions.Button(
     custom_id="button_tank_3"
 )
 
-button_other = interactions.Button(
-    style=interactions.ButtonStyle.PRIMARY,
-    label="Golems",
-    custom_id="button_other"
-)
-
-button_other = interactions.Button(
-    style=interactions.ButtonStyle.PRIMARY,
-    label="Snipers",
-    custom_id="button_other"
-)
-
-button_other = interactions.Button(
-    style=interactions.ButtonStyle.PRIMARY,
-    label="Other Other Souls",
-    custom_id="button_other"
-)
-
 row_souls = interactions.ActionRow(
     components=[button_admin, button_hypixel, button_tank]
 )
@@ -501,6 +483,12 @@ button_tank_w = interactions.Button(
     custom_id="button_tank_w"
 )
 
+button_other = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Other Souls",
+    custom_id="button_other"
+)
+
 button_admin_1_w = interactions.Button(
     style=interactions.ButtonStyle.PRIMARY,
     label="1",
@@ -555,10 +543,27 @@ button_tank_3_w = interactions.Button(
     custom_id="button_tank_3_w"
 )
 
-row_souls_w = interactions.ActionRow(
-    components=[button_admin_w, button_hypixel_w, button_tank_w]
+button_other_1 = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Golems",
+    custom_id="button_other_1"
 )
 
+button_other_2 = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Snipers",
+    custom_id="button_other_2"
+)
+
+button_other_3 = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Other Other Souls",
+    custom_id="button_other_3"
+)
+
+row_souls_w = interactions.ActionRow(
+    components=[button_admin_w, button_hypixel_w, button_tank_w, button_other]
+)
 row_admin_numbers_w = interactions.ActionRow(
     components=[button_admin_1_w, button_admin_2_w, button_admin_3_w]
 )
@@ -567,6 +572,9 @@ row_hypixel_numbers_w = interactions.ActionRow(
 )
 row_tank_numbers_w = interactions.ActionRow(
     components=[button_tank_1_w, button_tank_2_w, button_tank_3_w]
+)
+row_other_numbers = interactions.ActionRow(
+    components=[button_other_1, button_other_2, button_other_3]
 )
 
 
@@ -586,16 +594,33 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
     if type_soul == 1:
 
         wanted_string += "Admin Souls: "
+        wanted_string += str(num_souls)
 
     elif type_soul == 2:
 
         wanted_string += "Hypixel Souls: "
+        wanted_string += str(num_souls)
 
     elif type_soul == 3:
 
         wanted_string += "Tank Souls: "
+        wanted_string += str(num_souls)
+    
+    elif type_soul == 4:
 
-    wanted_string += str(num_souls)
+        wanted_string += "Other Souls: "
+        
+        if num_souls == 1:
+            
+            wanted_string += "Golem"
+        
+        if num_souls == 2:
+            
+            wanted_string += "Sniper"
+        
+        if num_souls == 3:
+            
+            wanted_string += "Other"
 
     sell_offers = []
 
@@ -727,6 +752,26 @@ async def button_response(ctx: interactions.CommandContext):
 @bot.component("button_tank_3_w")
 async def button_response(ctx: interactions.CommandContext):
     embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 3, 3),
+                               color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+@bot.component("button_other_1")
+async def button_response(ctx: interactions.CommandContext):
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 4, 1),
+                               color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+
+@bot.component("button_other_2")
+async def button_response(ctx: interactions.CommandContext):
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 4, 2),
+                               color=0x911ef5)
+    await ctx.send(embeds=[embed], ephemeral=True)
+
+
+@bot.component("button_other_3")
+async def button_response(ctx: interactions.CommandContext):
+    embed = interactions.Embed(title="**Matching Auctions**", description=get_requested_auctions_w(messages, 4, 3),
                                color=0x911ef5)
     await ctx.send(embeds=[embed], ephemeral=True)
 
