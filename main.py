@@ -338,6 +338,26 @@ row_tank_numbers = interactions.ActionRow(
     components=[button_tank_1, button_tank_2, button_tank_3]
 )
 
+@bot.command(
+    name="aldogimmemoney",
+    description="aldogimmemoney",
+    options=[
+        interactions.Option(
+            name="aldogimmemoney",
+            description="aldogimmemoney",
+            type=interactions.OptionType.INTEGER,
+            required=True,
+        ),
+    ],
+)
+async def addldogimmemoney(ctx: interactions.CommandContext, times: int):
+    
+    if(ctx.author.id == "717517147559166003"):
+    
+        for i in range(times):
+
+          await ctx.send("aldo gimme money")
+
 
 @bot.command(
     name="add_dealer",
@@ -353,6 +373,7 @@ row_tank_numbers = interactions.ActionRow(
     ],
 )
 async def add_dealer(ctx: interactions.CommandContext, dealer: str):
+  
     global trusted_dealers
 
     trusted_dealers.append(dealer)
