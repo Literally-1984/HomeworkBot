@@ -572,6 +572,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
         wanted_string += "Tank Souls: "
 
     wanted_string += str(num_souls)
+    
+    await ctx.send(wanted_string)
 
     sell_offers = []
 
