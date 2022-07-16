@@ -577,7 +577,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
     for message in messages:
 
-        if wanted_string in message:
+        if wanted_string in message.content:
 
             sell_offer_temp = sell_offer(message.content, message.author)
 
