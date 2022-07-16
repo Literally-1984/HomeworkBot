@@ -614,8 +614,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 async def wtb(ctx: interactions.CommandContext):
 
     global messages
-    messages = await ctx.channel.get_history(limit=100)
-    
+    messages = await ctx.get_channel()
+
     await ctx.send(type(messages))
 
     embed = interactions.Embed(title="Soul Sell Offer Finder", description="What kind of souls do you want?",
