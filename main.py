@@ -549,7 +549,7 @@ row_tank_numbers_w = interactions.ActionRow(
 @dataclass
 class sell_offer:
     content: str
-    author: interactions.Message.author.mention
+    author: interactions.User.mention
     price: int
 
     def __lt__(self, other):
