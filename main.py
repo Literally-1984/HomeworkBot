@@ -615,6 +615,8 @@ async def wtb(ctx: interactions.CommandContext):
 
     global messages
     messages = await ctx.channel.get_history(limit=100)
+    
+    await ctx.send(type(messages))
 
     embed = interactions.Embed(title="Soul Sell Offer Finder", description="What kind of souls do you want?",
                                color=0x911ef5)
