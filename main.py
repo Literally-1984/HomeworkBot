@@ -561,7 +561,7 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
 
     if type_soul == 1:
 
-        wanted_string += "Admin souls: "
+        wanted_string += "Admin Souls: "
 
     elif type_soul == 2:
 
@@ -574,12 +574,13 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
     wanted_string += str(num_souls)
 
     sell_offers = []
-    
-    print(wanted_string)
 
     for message in messages:
 
         if wanted_string in message.content:
+          
+            reference = message.message_reference
+            print(type(reference))
 
             sell_offer_temp = sell_offer(message.content, message.author, 0)
 
