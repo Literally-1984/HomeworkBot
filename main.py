@@ -855,12 +855,6 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: 
 
     await ctx.send(embeds=[embed])
 
-    common_costs_embed = interactions.Embed(title="**Common Mana Costs**",
-                                            description="**Admin Soul** (15m HP 225k Damage):\n\n　**Raw Mana Cost**: 4650.0\n\n　**With Max Reduction**: 1246.2\n\n\n**Hypixel** (75m HP 750k DMG)\n\n　**Raw Mana Cost**: 15750.0\n\n　**With Max Reduction**: 4221.0",
-                                            color=0x911ef5)
-
-    await ctx.send(embeds=[common_costs_embed])
-
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -912,18 +906,26 @@ async def emojiblocker(ctx: interactions.CommandContext):
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 @bot.event(name="on_message_create")
-async def on_message_create(message: interactions.Message):
+async def on_message_create(ctx: interactions.CommandContext, message: interactions.Message):
 
-    if emojiblockerbool:
+    if message.channel_id == "900346857375531108":
 
-        if blacklisted:
+        common_costs_embed = interactions.Embed(title="**Common Mana Costs**",
+                                            description="**Admin Soul** (15m HP 225k Damage):\n\n　**Raw Mana Cost**: 4650.0\n\n　**With Max Reduction**: 1246.2\n\n\n**Hypixel** (75m HP 750k DMG)\n\n　**Raw Mana Cost**: 15750.0\n\n　**With Max Reduction**: 4221.0",
+                                            color=0x911ef5)
 
-            for word in blacklisted:
+        await ctx.send(embeds=[common_costs_embed])
+    
+    else if message.channel_id == "951415724310691860" and message.content[-1] != ']':
+      
+        trading_souls_string == "In order for your sell offer to show up in /wtb commands, you have to have the following syntax at the end of your message:\n\n**[{type: Admin, Tank, Hypixel} Souls: {number}, Price: {Price}]**\n\nExample: **[Admin Souls: 2, Price: 10m]**"
 
-                if word in message.content:
+        trading_souls_embed = interactions.Embed(title="**IMPORTANT**",
+                                            description=trading_souls_string,
+                                            color=0x911ef5)
 
-                    await message.delete()
-
+        await ctx.send(embeds=[trading_souls_embed])
+        
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 button_souls = interactions.Button(
