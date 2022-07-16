@@ -264,6 +264,12 @@ button_tank = interactions.Button(
     custom_id="button_tank"
 )
 
+button_other = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Other Souls",
+    custom_id="button_other"
+)
+
 button_admin_1 = interactions.Button(
     style=interactions.ButtonStyle.PRIMARY,
     label="1",
@@ -316,6 +322,24 @@ button_tank_3 = interactions.Button(
     style=interactions.ButtonStyle.PRIMARY,
     label="6-8",
     custom_id="button_tank_3"
+)
+
+button_other = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Golems",
+    custom_id="button_other"
+)
+
+button_other = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Snipers",
+    custom_id="button_other"
+)
+
+button_other = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="Other Other Souls",
+    custom_id="button_other"
 )
 
 row_souls = interactions.ActionRow(
