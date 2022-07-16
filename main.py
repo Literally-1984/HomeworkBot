@@ -615,6 +615,7 @@ async def wtb(ctx: interactions.CommandContext):
 
     global messages
     messages = await ctx.get_channel()
+    messages = messages.get_history(limit=100)
 
     await ctx.send(type(messages))
 
