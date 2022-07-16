@@ -911,18 +911,18 @@ async def emojiblocker(ctx: interactions.CommandContext):
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-# @bot.event(name="on_message_create")
-# async def on_message_create(message: interactions.Message):
+@bot.event(name="on_message_create")
+async def on_message_create(message: interactions.Message):
 
-#     if emojiblockerbool:
+    if emojiblockerbool:
 
-#         if blacklisted:
+        if blacklisted:
 
-#             for word in blacklisted:
+            for word in blacklisted:
 
-#                 if word in message.content:
+                if word in message.content:
 
-#                     await message.delete()
+                    await message.delete()
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1011,6 +1011,20 @@ async def button_response(ctx):
 
     embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
     await ctx.send(embeds=[embed])
+
+@bot.command(
+    name="help",
+    description="Lists all commands!",
+)
+async def wtb(ctx: interactions.CommandContext):
+  
+    help_str = "/necroauctions {user}: Returns necromancy-related auctions of a user, including souls\n\n/find_auactions: Finds matching auctions of trusted dealers from a set of user-provided requirements by usage of an interactive menu (yes I spelled auctions wrong, I’ll change it later but I assume all of you use autocomplete)\n\n"
+    help_str_2 = "/mana_cost {hp} {dmg}: Returns the mana cost of a soul with specified HP and DMG, along with common mana costs in order to conserve time\n\n/faq: Uses yet another set of interactive menus to display commonly asked questions\n\n"
+    help_str_3 = "/wtb: Returns all sell offers with specified requirements\n\n\n\nPlease DM Literally 1984#1984 if there are any bugs!"
+
+    embed = interactions.Embed(title="List of Commands", description=help_str+help_str_2+help_str_3,
+                               color=0x911ef5)
+    await ctx.send(embeds=[embed], components=row_souls_w, ephemeral=True)
 
 
 bot.start()
