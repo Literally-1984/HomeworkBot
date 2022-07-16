@@ -549,7 +549,7 @@ row_tank_numbers_w = interactions.ActionRow(
 @dataclass
 class sell_offer:
     content: str
-    author: str
+    author
     price: int
 
     def __lt__(self, other):
@@ -578,11 +578,8 @@ def get_requested_auctions_w(messages, type_soul, num_souls):
     for message in messages:
 
         if wanted_string in message.content:
-          
-            reference = message.message_reference
-            print(type(reference))
 
-            sell_offer_temp = sell_offer(message.content, message.author, 0)
+            sell_offer_temp = sell_offer(message.content, message.author.mention, 0)
 
             index = sell_offer_temp.content.find("Price: ")
             index += 7
