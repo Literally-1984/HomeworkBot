@@ -239,7 +239,7 @@ def convert_nbt(nbt_list):
         names.append(final_name_str)
 
         # print(len(tag))
-        print(tag.pretty_tree())
+        # print(tag.pretty_tree())
 
         souls = []
 
