@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import re
 import os
 
-bot = interactions.Client(token="OTk1NDM3OTY5MDgxMTIyOTY2.G0hgNr.uF9O5lHf4HxooQ5XFTrqQRe_WvFGSMVIGViORk",
+bot = interactions.Client(token=token=os.environ.get("TOKEN"),
                           intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT)
 
 
@@ -43,7 +43,7 @@ def get_auctions(user: str):
 
     uuid = response.json().get("id")
 
-    auctions_url = "https://api.hypixel.net/skyblock/auction?key=" + "11b2a97a-e691-48ba-be58-235f67cf6193" + "&player={thing_uuid}".format(
+    auctions_url = "https://api.hypixel.net/skyblock/auction?key=" + os.environ.get("API_KEY") + "&player={thing_uuid}".format(
         thing_uuid=uuid)
 
     auctions_response = requests.get(auctions_url)
