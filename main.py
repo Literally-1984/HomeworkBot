@@ -355,7 +355,7 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
 
     embed = interactions.Embed(title="Necromancy-related auctions of {userguy}".format(userguy=dealer), description=final_str)
 
-    await ctx.send(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+    await ctx.send(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
 @bot.component("sort_menu")
 async def menu_response(ctx: interactions.CommandContext, options: list[str]):
@@ -374,7 +374,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
             embed = interactions.Embed(title="Necromancy-related auctions of {userguy} - LBIN to HBIN".format(userguy=dealer),
                                        description=final_str)
 
-            await ctx.edit(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
         elif (option == "price_h"):
 
@@ -388,7 +388,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
             embed = interactions.Embed(title="Necromancy-related auctions of {userguy} - HBIN to LBIN".format(userguy=dealer),
                                        description=final_str)
 
-            await ctx.edit(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
         elif (option == "admin"):
 
@@ -409,7 +409,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
             embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Admin Souls".format(userguy=dealer),
                                        description=final_str)
 
-            await ctx.edit(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
         elif (option == "hypixel"):
 
@@ -428,7 +428,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
             embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Hypixel Souls".format(userguy=dealer),
                                        description=final_str)
 
-            await ctx.edit(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
         elif (option == "other"):
 
@@ -448,7 +448,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
             embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Other Souls".format(userguy=dealer),
                                        description=final_str)
 
-            await ctx.edit(embeds=[embed], components=[BotComponents.menu_row, BotComponents.pages_row])
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
         else:
 
@@ -468,3 +468,4 @@ async def menu_response(ctx: interactions.CommandContext):
 
 
 bot.start()
+
