@@ -357,7 +357,107 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
 
     await ctx.send(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
-@bot.component("sort_menu")
+@bot.component("sort_price_menu")
+async def menu_response(ctx: interactions.CommandContext, options: list[str]):
+
+    for option in options:
+
+        if(option == "price_l"):
+
+            auctions_list.sort()
+
+            final_str = ""
+
+            for temp_auction in auctions_list:
+                final_str += temp_auction.auction_string
+
+            embed = interactions.Embed(title="Necromancy-related auctions of {userguy} - LBIN to HBIN".format(userguy=dealer),
+                                       description=final_str)
+
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
+
+        elif (option == "price_h"):
+
+            auctions_list.sort(reverse=True)
+
+            final_str = ""
+
+            for temp_auction in auctions_list:
+                final_str += temp_auction.auction_string
+
+            embed = interactions.Embed(title="Necromancy-related auctions of {userguy} - HBIN to LBIN".format(userguy=dealer),
+                                       description=final_str)
+
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
+
+        elif (option == "admin"):
+
+            admin_auctions = []
+
+            for auction in auctions_list:
+
+                if auction.contains_admin_souls:
+
+                    admin_auctions.append(auction)
+
+            final_str = ""
+
+            for temp_auction in admin_auctions:
+
+                final_str += temp_auction.auction_string
+
+            embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Admin Souls".format(userguy=dealer),
+                                       description=final_str)
+
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
+
+        elif (option == "hypixel"):
+
+            hypixel_auctions = []
+
+            for auction in auctions_list:
+
+                if auction.contains_hypixel_souls:
+                    hypixel_auctions.append(auction)
+
+            final_str = ""
+
+            for temp_auction in hypixel_auctions:
+                final_str += temp_auction.auction_string
+
+            embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Hypixel Souls".format(userguy=dealer),
+                                       description=final_str)
+
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
+
+        elif (option == "other"):
+
+            other_auctions = []
+
+            for auction in auctions_list:
+
+                if auction.contains_hypixel_souls:
+                    other_auctions.append(auction)
+
+            final_str = ""
+
+            for temp_auction in other_auctions:
+
+                final_str += temp_auction.auction_string
+
+            embed = interactions.Embed(title="Necromancy-related auctions of {userguy} with Other Souls".format(userguy=dealer),
+                                       description=final_str)
+
+            await ctx.edit(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
+
+        else:
+
+            embed = interactions.Embed(title="FAILED",
+                                       description="Failed, please contact Literally 1984#1984 to report this bug")
+
+            await ctx.send(embeds=[embed])
+
+@bot.component("sort_souls_menu")
 async def menu_response(ctx: interactions.CommandContext, options: list[str]):
 
     for option in options:
