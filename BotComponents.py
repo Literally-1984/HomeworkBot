@@ -48,13 +48,13 @@ other_souls = interactions.SelectOption(
 sort_price_menu = interactions.SelectMenu(
     options=[price_ltoh, price_htol, price_custom],
     placeholder="Sort by.....",
-    custom_id="sort_menu",
+    custom_id="sort_price_menu",
 )
 
 sort_admins_menu = interactions.SelectMenu(
     options=[admin_souls, hypixel_souls, other_souls],
     placeholder="Sort by.....",
-    custom_id="sort_menu",
+    custom_id="sort_souls_menu",
 )
 
 next_page = interactions.Button(
