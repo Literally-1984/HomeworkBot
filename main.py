@@ -13,21 +13,21 @@ import os
 bot = interactions.Client(token=os.environ.get("TOKEN"),
                           intents=interactions.Intents.DEFAULT | interactions.Intents.GUILD_MESSAGE_CONTENT)
 
-admin_names = ["Rezzus", "AgentKid", "CryptKeeper", "Thorlon", "Plancke",
-               "Hcherndon", "DevSlashNull", "codename_B", "aPunch", "DeprecatedNether", "Jayavarmen",
-               "ZeroErrors", "Zumulus", "Nitroholic", "OrangeMarshall", "ConnorLinfoot",
+admin_names = ["Rezzus", "Agentkid", "Cryptkeeper", "Thorlon", "Plancke",
+               "Hcherndon", "Devslashnull", "Codename B", "Apunch", "Deprecatednether", "Jayavarmen",
+               "Zeroerrors", "Zumulus", "Nitroholic", "Orangemarshall", "Connorlinfoot",
                "Externalizable",
-               "Relenter", "Dctr", "Minikloon", "Slikey", "PxlPanda", "Riari", "SteampunkStein",
-               "Xael_Thomas", "NinjaCharlieT", "Don Pireso", "ChiLynn", "PJoke1", "JamieTheGeek",
+               "Relenter", "Dctr", "Minikloon", "Slikey", "Pxlpanda", "Riari", "Steampunkstein",
+               "Xael_thomas", "Ninjacharliet", "Don pireso", "Chilynn", "Pjoke1", "Jamiethegeek",
                "Fr0z3n",
-               "Luckykessie", "RobityBobity", "mooTV", "Otium", "NoxyD", "BingMo", "Propzie", "Roddan",
+               "Luckykessie", "Robitybobity", "Mootv", "Otium", "Noxyd", "Bingmo", "Propzie", "Roddan",
                "Winghide",
-               "BuddhaCat", "Sylent", "LadyBleu", "Cecer", "Bloozing", "Ob111", "Likaos", "skyerzz", "Revengee",
-               "onah", "inventivetalent", "xHascox", "sfarnham", "Bembo", "_PolynaLove_", "Pensul", "TorWolf",
-               "Taytale", "Nausicaah", "flameboy101", "Teddy", "Judg3", "Citria", "Magicboys", "RapidTheNerd", "Cham",
-               "vinny8ball", "Cheesey", "Dueces", "_fudgiethewhale", "DEADORKAI", "BlocksKey", "Plummel",
-               "DistrictGecko",
-               "AdamWho", "carstairs95", "MistressEldrid"]
+               "Buddhacat", "Sylent", "Ladybleu", "Cecer", "Bloozing", "Ob111", "Likaos", "skyerzz", "Revengee",
+               "onah", "inventivetalent", "Xhascox", "sfarnham", "Bembo", " polynalove ", "Pensul", "Torwolf",
+               "Taytale", "Nausicaah", "Flameboy101", "Teddy", "Judg3", "Citria", "Magicboys", "Rapidthenerd", "Cham",
+               "vinny8ball", "Cheesey", "Dueces", " fudgiethewhale", "Deadorkai", "BlocksKey", "Plummel",
+               "Districtgecko",
+               "Adamwho", "carstairs95", "Mistresseldrid"]
 
 auctions_list = []
 dealer = ""
