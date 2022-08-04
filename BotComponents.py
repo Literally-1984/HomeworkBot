@@ -23,7 +23,7 @@ price_htol = interactions.SelectOption(
 
 price_custom = interactions.SelectOption(
     label="Price (Custom Range)",
-    value="price_h",
+    value="price_o",
     description="Sort By Price - Highest to Lowest",
 )
 
