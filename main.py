@@ -84,6 +84,22 @@ def get_auctions(user: str):
     auctions = auctions_response.json().get("auctions")
 
     return auctions
+ 
+def format_number(num):
+   num = safe_num(num)
+   sign = ''
+
+   metric = {'T': 1000000000000, 'B': 1000000000, 'M': 1000000, 'K': 1000, '': 1}
+
+   for index in metric:
+      num_check = num / metric[index]
+
+      if (num_check >= 1):
+         num = num_check
+         sign = index
+         break
+
+   return f"{str(num).rstrip('0').rstrip('.')}{sign}"
 
 
 def get_info(auctions):
@@ -320,7 +336,7 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
 
     for i in range(len(nbt_data)):
 
-        item_str = "**" + names[i] + "**" + " - " + str(price[i]) + "\n\n"
+        item_str = "**" + names[i] + "**" + " - " + str(format_number(price[i])) + "\n\n"
 
         temp_auction = Auction(price[i], False, False, False, "")
 
