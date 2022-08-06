@@ -320,7 +320,7 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
 
     for i in range(len(nbt_data)):
 
-        item_str = "**" + names[i] + "**" + " - " + str(price[i]) "\n\n"
+        item_str = "**" + names[i] + "**" + " - " + str(price[i]) + "\n\n"
 
         temp_auction = Auction(price[i], False, False, False, "")
 
