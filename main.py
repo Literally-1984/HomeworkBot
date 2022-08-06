@@ -46,6 +46,11 @@ class Auction:
     def __lt__(self, other):
         return self.price < other.price
 
+def safe_num(num):
+   if isinstance(num, str):
+      num = float(num)
+   return float('{:.3g}'.format(abs(num)))
+
 def int_to_Roman(num):
 
     val = [
