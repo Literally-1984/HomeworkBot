@@ -379,7 +379,7 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
     await ctx.send(embeds=[embed], components=[BotComponents.price_menu_row, BotComponents.souls_menu_row, BotComponents.pages_row])
 
 @bot.event(name="on_message_create")
-async def on_message_create(message: interactions.Message, ctx: interactions.CommandContext):
+async def on_message_create(ctx: interactions.CommandContext, message: interactions.Message):
   
     if "hp" in message.content and "dmg" in message.content:
         
