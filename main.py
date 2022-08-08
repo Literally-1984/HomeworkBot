@@ -699,21 +699,21 @@ async def button_response(ctx):
 async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: str, breeze: int):
    if (hp.endswith('m')):
 
-      hp = int(hp[:-1]) * 1000000
+      hp_int = int(hp[:-1]) * 1000000
 
    elif (hp.endswith('k')):
 
-      hp = int(hp[:-1]) * 1000
+      hp_int = int(hp[:-1]) * 1000
 
    if (damage.endswith('m')):
 
-      damage = int(damage[:-1]) * 1000000
+      damage_int = int(damage[:-1]) * 1000000
 
    elif (damage.endswith('k')):
 
-      damage = int(damage[:-1]) * 1000
+      damage_int = int(damage[:-1]) * 1000
 
-   manacost = damage / 50 + hp / 100000
+   manacost = damage_int / 50 + hp_int / 100000
 
    manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
 
