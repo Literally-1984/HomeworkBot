@@ -718,7 +718,7 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: 
    manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
 
    embed = interactions.Embed(title="**Mana Cost Calculation**",
-                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
+                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction (Wise Dragon, breeze on equipment)**: {manamin}"
                               .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
    await ctx.send(embeds=[embed])
