@@ -768,6 +768,11 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage:
 
       damage_int = int(damage[:-1]) * 1000
 
+   else:
+
+      damage_int = int(damage)
+      hp_int = int(hp)
+
    manacost = damage_int / 50 + hp_int / 100000
 
    manacostmin = -1
