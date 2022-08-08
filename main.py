@@ -614,7 +614,7 @@ async def on_message_create(message: interactions.Message):
                                   description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction (Wise Dragon, breeze on equipment)**: {manamin}"
                                   .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
-        await message.channel.send(embeds=[embed])
+        await message.reply(embeds=[embed])
 
 @bot.component("arrow_prev")
 async def button_response(ctx: interactions.CommandContext):
