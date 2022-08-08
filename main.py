@@ -585,19 +585,10 @@ async def on_message_create(message: interactions.Message):
       
         hp = ""
         dmg = ""
+        split_str = message.content.split(" ")
         
-        thingbool = False
-        
-        for char in message.content:
-            
-            hp.
-          
-            if(thingbool == True):
-              
-            else:
-              
-              if char == " "
-            
+        hp = split_str[0]
+        dmg = split_str[2]
       
         if (hp.endswith('m')):
 
@@ -624,8 +615,6 @@ async def on_message_create(message: interactions.Message):
                                   .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
         await message.channel.send(embeds=[embed])
-  
-    await message.channel.send()
 
 @bot.component("arrow_prev")
 async def button_response(ctx: interactions.CommandContext):
