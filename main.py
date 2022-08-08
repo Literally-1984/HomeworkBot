@@ -382,8 +382,7 @@ async def necroauctions(ctx: interactions.CommandContext, user: str):
 async def on_message_create(ctx: interactions.Message):
   
     if "hp" in message.content and "dmg" in message.content:
-        
-        print("sdfsdf")
+      
     
 
 @bot.component("sort_price_menu")
@@ -594,7 +593,142 @@ async def button_response(ctx: interactions.CommandContext):
 async def menu_response(ctx: interactions.CommandContext):
     await ctx.edit("balls 2")
 
+button_souls = interactions.Button(
+   style=interactions.ButtonStyle.PRIMARY,
+   label="Souls",
+   custom_id="button_souls"
+)
 
+button_mana_cost = interactions.Button(
+   style=interactions.ButtonStyle.PRIMARY,
+   label="Mana Cost",
+   custom_id="button_mana_cost"
+)
+
+button_slayer_guides = interactions.Button(
+   style=interactions.ButtonStyle.PRIMARY,
+   label="Slayer Guides",
+   custom_id="button_guides"
+)
+
+button_more_soul = interactions.Button(
+   style=interactions.ButtonStyle.PRIMARY,
+   label="More Soul Info",
+   custom_id="button_more_soul"
+)
+
+row_faq = interactions.ActionRow(
+   components=[button_souls, button_mana_cost, button_slayer_guides, button_more_soul]
+)
+
+
+@bot.command(
+   name="faq",
+   description="Frequently Asked Questions",
+)
+async def faq(ctx: interactions.CommandContext):
+   embed = interactions.Embed(title="Faq",
+                              description="Please select a section to learn more about\n\nIf you still have any questions, feel free to ask them in #questions-and-advice!",
+                              color=0x911ef5)
+
+   await ctx.send(embeds=[embed], components=row_faq)
+
+
+@bot.component("button_souls")
+async def button_response(ctx):
+   soul_str_1 = "**How do I know if a Soul is from Mastermode or not?**\n\n Download the #soul-checker-mod by installing forge for 1.8.9 (https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) and putting the mod into your mods folder in .minecraft.\n"
+   soul_str_2 = "If you start Minecraft, any Mastermode Souls will have a blue text saying MASTERMODE SOUL behind them. Their respective item in the auction house will also have colored background:\n"
+   soul_str_3 = "Green: The weapon has only Mastermode Souls\n"
+   soul_str_4 = "Orange: The weapon has at least one not Mastermode Soul\n\n\n"
+
+   soul_str_5 = "**How are souls obtained?**\n\n"
+   soul_str_6 = "The basic principle behind souls is that depending on the level of their respective mob, they have a chance to drop their soul if you either kill them with a necromancer weapon (Reaper Scythe/Necromancer Sword) or have a Summoning Ring in your inventory.\n"
+   soul_str_7 = "Those souls can then be picked up with the item.\n Both Admin Souls and Hypixel Soul are obtained from a rare (around 1% spawnrate) room in M1.\n Tank Zombies are always from M3."
+
+   final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
+
+   embed = interactions.Embed(title="Soul Guides", description=final_soul_faq_str, color=0x911ef5)
+   await ctx.send(embeds=[embed])
+
+
+@bot.component("button_mana_cost")
+async def button_response(ctx):
+   soul_str_1 = "**How do I calculate mana cost and what does max reduction mean?**\n\n Mana cost can easily be calculated with the formula: Damage / 50 + Health / 100,000 The bot in mana-cost-check will do this for you.\n"
+   soul_str_2 = "Max reduction is achieved by having\n1. Ultimate Wise 5 on your Necromancer Weapon, which grants a 50% reduction of mana cost (This is why a Summoning Ring should not be used to summon souls as it can not be enchanted with Ultimate Wise 5)\n"
+   soul_str_3 = "2. Wise Dragon Armor's full set bonus makes all your abilities cost .67 of its original cost, so you use 33% less mana.\n"
+   soul_str_4 = "3. Lastly the Epic and Legendary Sheep pet reduces the cost of your abilities by 20% at level 100.\n"
+   soul_str_5 = "This gives a formula of mana cost x 0.5 x 0.66 x 0.8 or mana cost x 0.26.\nMAKE SURE YOU HAVE THESE THINGS OTHERWISE SPAWNING YOUR SOUL WILL BE EXPONENTIONELLY MORE EXPENSIVE\n\n\n"
+
+   soul_str_6 = "**How do I spawn my soul?**\n\n In the Mana and Summoning Guides category are multiple guides on general mana knowledge as well as how to summon 1.\n1 Admin soul #summoning-1-admin\n2. 2 Admin souls #summoning-2–admins \n3. Hypixel #summoning-hypixel\n4. Tank Zombies #summoning-tanks\n\n"
+   soul_str_7 = "There is usually a cheap method, which is harder to pull off and a easier, but more expensive method."
+
+   final_soul_faq_str = soul_str_1 + soul_str_2 + soul_str_3 + soul_str_4 + soul_str_5 + soul_str_6 + soul_str_7
+
+   embed = interactions.Embed(title="Mana Cost Guides", description=final_soul_faq_str, color=0x911ef5)
+   await ctx.send(embeds=[embed])
+
+
+@bot.component("button_guides")
+async def button_response(ctx):
+   soul_str_1 = "**Which soul do I get?**\n\n 1 Admin is good enough for all Slayer Bosses besides Revenant T5 and Voidgloom T3+\n2 Admins can do all Slayer bosses besides Revenant T5 and Voidgloom T4\n1 Hypixel can do all Slayer bosses besides Voidgloom T4\n1 M6 Giant/Golem can do ALL slayer bosses. He shreds through them\nUsing souls or for Blaze Slayer T2+ is not recommended as it has max health damage which kills them fast"
+
+   soul_str_2 = "\n\n\n**How do I avoid dying to voidgloom while AFKing using Admins?**\n\nYou need:\n1. Goblin Armor\n2. Wither Cloak sword and any item with UW5 on it\n3. A god potion\nIf you get hit you loose 10% max mana with wither cloak on (20%*0.5) which is 10, as your max mana is 100. Your base mana regen is 2 and god pot adds 8. So you regen 10mana/s and loose 1 per hit. This allows you to basically never take damage, unless there is enough Nukebi Heads to deal damage to you more than once per second."
+
+   final_soul_faq_str = soul_str_1 + soul_str_2
+
+   embed = interactions.Embed(title="Slayer Guides", description=final_soul_faq_str, color=0x911ef5)
+   await ctx.send(embeds=[embed])
+    
+@bot.command(
+   name="manacostcalculator",
+   description="Calculates the mana cost given HP and Damage",
+   options=[
+      interactions.Option(
+         name="hp",
+         description="The amount of HP your desired mob has",
+         type=interactions.OptionType.STRING,
+         required=True,
+      ),
+      interactions.Option(
+         name="damage",
+         description="The amount of damage your desired mob has",
+         type=interactions.OptionType.STRING,
+         required=True,
+      ),
+      interactions.Option(
+         name="breeze",
+         description="The amount of breeze you have in total",
+         type=interactions.OptionType.STRING,
+         required=True,
+      ),
+   ],
+)
+async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: str, breeze: int):
+   if (hp.endswith('m')):
+
+      hp = int(hp[:-1]) * 1000000
+
+   elif (hp.endswith('k')):
+
+      hp = int(hp[:-1]) * 1000
+
+   if (damage.endswith('m')):
+
+      damage = int(damage[:-1]) * 1000000
+
+   elif (damage.endswith('k')):
+
+      damage = int(damage[:-1]) * 1000
+
+   manacost = damage / 50 + hp / 100000
+
+   manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
+
+   embed = interactions.Embed(title="**Mana Cost Calculation**",
+                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
+                              .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
+
+   await ctx.send(embeds=[embed])
 
 bot.start()
 
