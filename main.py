@@ -772,7 +772,7 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage:
 
    manacostmin = -1
    
-   minstr = "**With Max Reduction:***"
+   minstr = "**With Max Reduction:**"
     
    if breeze > 40 and breeze < 60:
 
