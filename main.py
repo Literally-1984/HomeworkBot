@@ -608,7 +608,7 @@ async def on_message_create(message: interactions.Message):
 
         manacost = damage_int / 50 + hp_int / 100000
 
-        manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
+        manacostmin = manacost * 0.268 
 
         embed = interactions.Embed(title="**Mana Cost Calculation**",
                                   description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction (Wise Dragon, breeze on equipment)**: {manamin}"
