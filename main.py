@@ -691,7 +691,7 @@ async def button_response(ctx):
       interactions.Option(
          name="breeze",
          description="The amount of breeze you have in total",
-         type=interactions.OptionType.STRING,
+         type=interactions.OptionType.INTEGER,
          required=True,
       ),
    ],
