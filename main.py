@@ -598,6 +598,14 @@ async def on_message_create(message: interactions.Message):
 
           hp_int = int(hp[:-1]) * 1000
 
+        elif hp.endswith('b'):
+
+          hp_int = int(hp[:-1]) * 1000000000
+
+        else:
+
+          hp_int = int(hp)
+
         if (damage.endswith('m')):
 
           damage_int = int(damage[:-1]) * 1000000
@@ -605,6 +613,14 @@ async def on_message_create(message: interactions.Message):
         elif (damage.endswith('k')):
 
           damage_int = int(damage[:-1]) * 1000
+
+        elif damage.endswith('b'):
+
+          damage_int = int(damage[-1]) * 1000000000
+        
+        else:
+         
+          damage_int = int(damage)
 
         manacost = damage_int / 50 + hp_int / 100000
 
