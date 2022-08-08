@@ -584,11 +584,11 @@ async def on_message_create(message: interactions.Message):
     if "hp" in message.content and "dmg" in message.content:
       
         hp = ""
-        dmg = ""
+        damage = ""
         split_str = message.content.split(" ")
         
         hp = split_str[0]
-        dmg = split_str[2]
+        damage = split_str[2]
       
         if (hp.endswith('m')):
 
