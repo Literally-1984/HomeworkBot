@@ -611,7 +611,7 @@ async def on_message_create(message: interactions.Message):
         manacostmin = manacost * 0.268 
 
         embed = interactions.Embed(title="**Mana Cost Calculation**",
-                                  description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction (Wise Dragon, breeze on equipment)**: {manamin}"
+                                  description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
                                   .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
         await message.reply(embeds=[embed])
@@ -734,7 +734,8 @@ async def button_response(ctx):
       ),
    ],
 )
-async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: str, breeze: int):
+async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage:
+ str, breeze: int):
    if (hp.endswith('m')):
 
       hp_int = int(hp[:-1]) * 1000000
@@ -756,7 +757,7 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage: 
    manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
 
    embed = interactions.Embed(title="**Mana Cost Calculation**",
-                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction (Wise Dragon, breeze on equipment)**: {manamin}"
+                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
                               .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
 
    await ctx.send(embeds=[embed])
