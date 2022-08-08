@@ -751,7 +751,7 @@ async def button_response(ctx):
    ],
 )
 async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage:
- str, breeze: int):
+ str, breeze=0):
    if (hp.endswith('m')):
 
       hp_int = int(hp[:-1]) * 1000000
