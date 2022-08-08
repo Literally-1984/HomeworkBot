@@ -727,7 +727,7 @@ async def button_response(ctx):
    await ctx.send(embeds=[embed])
     
 @bot.command(
-   name="manacostcalculator",
+   name="mana",
    description="Calculates the mana cost given HP and Damage",
    options=[
       interactions.Option(
@@ -746,7 +746,7 @@ async def button_response(ctx):
          name="breeze",
          description="The amount of breeze you have in total",
          type=interactions.OptionType.INTEGER,
-         required=True,
+         required=False,
       ),
    ],
 )
@@ -770,11 +770,31 @@ async def manacostcalculator(ctx: interactions.CommandContext, hp: str, damage:
 
    manacost = damage_int / 50 + hp_int / 100000
 
-   manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
+   manacostmin = -1
+   
+   minstr = "**With Max Reduction:***"
+    
+   if breeze > 40 and breeze < 60:
+
+      manacostmin = manacost * 0.268 * 0.6
+      minstr += " (using b10 equipment and wise drag)"
+
+   elif breeze >= 60:
+
+      manacostmin = manacost * 0.4 * (100-breeze)*0.01
+      minstr += "(using nether armor)"
+
+   else:
+
+      minstr += "(using wise drag)"
+
+      manacostmin = manacost * 0.268 * (100 - breeze) * 0.01
+
+   minstr += " " + str(manacostmin)
 
    embed = interactions.Embed(title="**Mana Cost Calculation**",
-                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
-                              .format(health=hp, dmg=damage, mana=manacost, manamin=manacostmin), color=0x911ef5)
+                              description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n {minimumstring}"
+                              .format(health=hp, dmg=damage, mana=manacost, minimumstring = minstr), color=0x911ef5)
 
    await ctx.send(embeds=[embed])
 
