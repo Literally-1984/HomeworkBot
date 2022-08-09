@@ -581,7 +581,7 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
 @bot.event(name="on_message_create")
 async def on_message_create(message: interactions.Message):
   
-    if "hp" in message.content and "dmg" in message.content and "breeze" in message.content:
+    if "hp" in message.content and "dmg" in message.content:
       
         hp = ""
         damage = ""
