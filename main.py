@@ -592,7 +592,6 @@ async def on_message_create(message: interactions.Message):
         damage = split_str[2]
 
         hasbreeze = False
-        breeze = 0
 
         for item in split_str:
 
@@ -600,9 +599,11 @@ async def on_message_create(message: interactions.Message):
 
             hasbreeze = True
 
+        int_breeze = 0
+
         if hasbreeze:
 
-          breeze = split_str[4]
+          int_breeze = split_str[4]
       
         if (hp.endswith('m')):
 
