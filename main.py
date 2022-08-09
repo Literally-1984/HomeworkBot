@@ -585,7 +585,7 @@ async def on_message_create(message: interactions.Message):
       
         hp = ""
         damage = ""
-        breeze = ""
+        breeze = "0"
         split_str = message.content.split(" ")
         
         hp = split_str[0]
