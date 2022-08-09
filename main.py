@@ -581,50 +581,64 @@ async def menu_response(ctx: interactions.CommandContext, options: list[str]):
 @bot.event(name="on_message_create")
 async def on_message_create(message: interactions.Message):
   
-    if "hp" in message.content and "dmg" in message.content:
+    if "hp" in message.content and "dmg" in message.content and breeze in message.content:
       
         hp = ""
         damage = ""
+        breeze = ""
         split_str = message.content.split(" ")
         
         hp = split_str[0]
         damage = split_str[2]
+
+        hasbreeze = False
+        breeze = 0
+
+        for item in split_str:
+
+          if item == "breeze":
+
+            hasbreeze = True
+
+        if hasbreeze:
+
+          breeze = split_str[4]
       
         if (hp.endswith('m')):
 
-          hp_int = int(hp[:-1]) * 1000000
+          hp_int = float(hp[:-1]) * 1000000
 
         elif (hp.endswith('k')):
 
-          hp_int = int(hp[:-1]) * 1000
+          hp_int = float(hp[:-1]) * 1000
 
         elif hp.endswith('b'):
 
-          hp_int = int(hp[:-1]) * 1000000000
+          hp_int = float(hp[:-1]) * 1000000000
 
         else:
 
-          hp_int = int(hp)
+          hp_int = float(hp)
 
         if (damage.endswith('m')):
 
-          damage_int = int(damage[:-1]) * 1000000
+          damage_int = float(damage[:-1]) * 1000000
 
         elif (damage.endswith('k')):
 
-          damage_int = int(damage[:-1]) * 1000
+          damage_int = float(damage[:-1]) * 1000
 
         elif damage.endswith('b'):
 
-          damage_int = int(damage[-1]) * 1000000000
+          damage_int = float(damage[-1]) * 1000000000
         
         else:
          
-          damage_int = int(damage)
+          damage_int = float(damage)
 
         manacost = damage_int / 50 + hp_int / 100000
 
-        manacostmin = manacost * 0.268 
+        manacostmin = manacost * 0.268 * (100-breeze) * 0.01
 
         embed = interactions.Embed(title="**Mana Cost Calculation**",
                                   description="**Summon Stats**:\n\n　**HP**: {health}\n\n　**Damage**: {dmg}\n\n\n**Mana Cost**:\n\n　**Raw Mana Cost**: {mana}\n\n　**With Max Reduction**: {manamin}"
